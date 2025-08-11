@@ -33,28 +33,43 @@
   <h1>이용자 만족도 조사</h1>
   <form id="surveyForm">
     <div class="question">
-      <label for="overall">서비스 만족도 (1-5)</label>
-      <select id="overall" name="overall" required>
+      <label>성별</label>
+      <label><input type="radio" name="gender" value="남성" required /> 남성</label>
+      <label><input type="radio" name="gender" value="여성" /> 여성</label>
+      <label><input type="radio" name="gender" value="기타" /> 기타</label>
+    </div>
+
+    <div class="question">
+      <label for="age">연령대</label>
+      <select id="age" name="age" required>
         <option value="">선택하세요</option>
-        <option value="1">1 - 매우 불만족</option>
-        <option value="2">2 - 불만족</option>
-        <option value="3">3 - 보통</option>
-        <option value="4">4 - 만족</option>
-        <option value="5">5 - 매우 만족</option>
+        <option value="10대">10대</option>
+        <option value="20대">20대</option>
+        <option value="30대">30대</option>
+        <option value="40대">40대</option>
+        <option value="50대">50대</option>
+        <option value="60대 이상">60대 이상</option>
       </select>
     </div>
 
     <div class="question">
-      <label>서비스 이용 빈도</label>
-      <label><input type="radio" name="frequency" value="daily" required /> 매일</label>
-      <label><input type="radio" name="frequency" value="weekly" /> 매주</label>
-      <label><input type="radio" name="frequency" value="monthly" /> 매월</label>
-      <label><input type="radio" name="frequency" value="rarely" /> 거의 안 함</label>
+      <label>참여 여부</label>
+      <label><input type="radio" name="participation" value="예" required /> 예</label>
+      <label><input type="radio" name="participation" value="아니오" /> 아니오</label>
     </div>
 
     <div class="question">
-      <label for="comments">기타 의견</label>
-      <textarea id="comments" name="comments" rows="4" cols="50" placeholder="의견을 입력해 주세요."></textarea>
+      <label>A 항목에 대해 얼마나 만족하십니까?</label>
+      <label><input type="radio" name="satisfaction" value="매우만족" required /> 매우만족</label>
+      <label><input type="radio" name="satisfaction" value="만족" /> 만족</label>
+      <label><input type="radio" name="satisfaction" value="보통" /> 보통</label>
+      <label><input type="radio" name="satisfaction" value="불만족" /> 불만족</label>
+      <label><input type="radio" name="satisfaction" value="매우불만족" /> 매우불만족</label>
+    </div>
+
+    <div class="question" id="reasonContainer" style="display:none;">
+      <label for="reason">불만족하셨다면 그 이유는 무엇입니까?</label>
+      <textarea id="reason" name="reason" rows="5" maxlength="1000" placeholder="이유를 입력해 주세요."></textarea>
     </div>
 
     <button type="submit">제출</button>
@@ -65,13 +80,31 @@
   <script>
     const form = document.getElementById('surveyForm');
     const resultDiv = document.getElementById('result');
+    const reasonContainer = document.getElementById('reasonContainer');
+    const satisfactionRadios = document.getElementsByName('satisfaction');
+
+    function toggleReason() {
+      const value = form.satisfaction.value;
+      if (value === '불만족' || value === '매우불만족') {
+        reasonContainer.style.display = 'block';
+      } else {
+        reasonContainer.style.display = 'none';
+        form.reason.value = '';
+      }
+    }
+
+    satisfactionRadios.forEach((radio) => {
+      radio.addEventListener('change', toggleReason);
+    });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       const data = {
-        overall: form.overall.value,
-        frequency: form.frequency.value,
-        comments: form.comments.value,
+        gender: form.gender.value,
+        age: form.age.value,
+        participation: form.participation.value,
+        satisfaction: form.satisfaction.value,
+        reason: form.reason.value,
       };
 
       // TODO: Replace with actual server call
@@ -88,6 +121,7 @@
         '</pre>';
       resultDiv.style.display = 'block';
       form.reset();
+      toggleReason();
     });
   </script>
 </body>

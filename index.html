@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>손동작 감지 - Hand Gesture Detection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            color: #ffffff;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+
+        .video-container {
+            position: relative;
+            display: inline-block;
+            border: 3px solid #00ffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            overflow: hidden;
+        }
+
+        #webcam {
+            display: block;
+            transform: scaleX(-1);
+        }
+
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: scaleX(-1);
+        }
+
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(0, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            border-radius: 5px;
+            max-width: 640px;
+        }
+
+        .status {
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: #00ff00;
+        }
+
+        .gesture-info {
+            margin-top: 10px;
+            font-size: 1.1em;
+            color: #ffff00;
+        }
+
+        .loading {
+            color: #00ffff;
+            font-size: 1.2em;
+        }
+
+        #error {
+            color: #ff0000;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👋 손동작 감지 시스템</h1>
+
+        <div class="video-container">
+            <video id="webcam" width="640" height="480" autoplay></video>
+            <canvas id="canvas" width="640" height="480"></canvas>
+        </div>
+
+        <div class="info">
+            <div class="status" id="status">시스템 초기화 중...</div>
+            <div class="gesture-info" id="gesture">손을 카메라에 보여주세요</div>
+            <div id="error"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+
+    <script>
+        const videoElement = document.getElementById('webcam');
+        const canvasElement = document.getElementById('canvas');
+        const canvasCtx = canvasElement.getContext('2d');
+        const statusElement = document.getElementById('status');
+        const gestureElement = document.getElementById('gesture');
+        const errorElement = document.getElementById('error');
+
+        // MediaPipe Hands 초기화
+        const hands = new Hands({
+            locateFile: (file) => {
+                return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+            }
+        });
+
+        hands.setOptions({
+            maxNumHands: 2,
+            modelComplexity: 1,
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5
+        });
+
+        hands.onResults(onResults);
+
+        // 손동작 인식 함수
+        function recognizeGesture(landmarks) {
+            if (!landmarks || landmarks.length === 0) return '손을 감지하지 못했습니다';
+
+            const fingers = countFingers(landmarks[0]);
+
+            if (fingers === 0) return '✊ 주먹 (0개 손가락)';
+            if (fingers === 1) return '☝️ 검지 (1개 손가락)';
+            if (fingers === 2) return '✌️ 브이 (2개 손가락)';
+            if (fingers === 3) return '🤟 세 손가락';
+            if (fingers === 4) return '🖖 네 손가락';
+            if (fingers === 5) return '✋ 손바닥 (5개 손가락)';
+
+            return `손가락 ${fingers}개`;
+        }
+
+        // 손가락 개수 세기
+        function countFingers(hand) {
+            let count = 0;
+
+            // 엄지손가락 (x 좌표로 판단)
+            if (hand[4].x < hand[3].x) count++;
+
+            // 나머지 손가락들 (y 좌표로 판단)
+            const fingerTips = [8, 12, 16, 20];
+            const fingerPips = [6, 10, 14, 18];
+
+            for (let i = 0; i < fingerTips.length; i++) {
+                if (hand[fingerTips[i]].y < hand[fingerPips[i]].y) {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        // 결과 처리 함수
+        function onResults(results) {
+            canvasCtx.save();
+            canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+                for (const landmarks of results.multiHandLandmarks) {
+                    // 손 연결선 그리기
+                    drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
+                        color: '#00FF00',
+                        lineWidth: 2
+                    });
+
+                    // 손 랜드마크 점 그리기
+                    drawLandmarks(canvasCtx, landmarks, {
+                        color: '#FF0000',
+                        lineWidth: 1,
+                        radius: 3
+                    });
+                }
+
+                // 손동작 인식
+                const gesture = recognizeGesture(results.multiHandLandmarks);
+                gestureElement.textContent = `감지된 동작: ${gesture}`;
+                statusElement.textContent = `✅ 손 감지 완료 (${results.multiHandLandmarks.length}개)`;
+            } else {
+                gestureElement.textContent = '손을 카메라에 보여주세요';
+                statusElement.textContent = '대기 중...';
+            }
+
+            canvasCtx.restore();
+        }
+
+        // 카메라 시작
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        width: 640,
+                        height: 480
+                    }
+                });
+
+                videoElement.srcObject = stream;
+                statusElement.textContent = '✅ 카메라 활성화 완료';
+
+                const camera = new Camera(videoElement, {
+                    onFrame: async () => {
+                        await hands.send({image: videoElement});
+                    },
+                    width: 640,
+                    height: 480
+                });
+
+                camera.start();
+            } catch (error) {
+                errorElement.textContent = `❌ 카메라 접근 오류: ${error.message}`;
+                console.error('Camera error:', error);
+            }
+        }
+
+        // 페이지 로드 시 카메라 시작
+        window.addEventListener('load', startCamera);
+    </script>
+</body>
+</html>

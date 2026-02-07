@@ -38,3 +38,9 @@ F1의 전설, **막스 베르스타펜(Max Verstappen)**을 위한 헌정 팬 �
 
 ---
 *Created by [Jin-ha](https://github.com/KimJinha-JJin) with 🧡 and Passion for F1*
+
+### 📈 My GitHub Stats
+
+![Jin-ha's GitHub stats](https://github-readme-stats.vercel.app/api?username=KimJinha-JJin&show_icons=true&theme=radical)
+
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=KimJinha-JJin&layout=compact&theme=radical)

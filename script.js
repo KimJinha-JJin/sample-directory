@@ -1,3 +1,43 @@
+// ===== Loading Screen =====
+const loader = document.getElementById('loader');
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        loader.classList.add('hidden');
+    }, 2200);
+});
+
+// ===== Custom Cursor =====
+const cursorDot = document.getElementById('cursorDot');
+const cursorRing = document.getElementById('cursorRing');
+
+document.addEventListener('mousemove', (e) => {
+    cursorDot.style.left = e.clientX + 'px';
+    cursorDot.style.top = e.clientY + 'px';
+
+    setTimeout(() => {
+        cursorRing.style.left = e.clientX + 'px';
+        cursorRing.style.top = e.clientY + 'px';
+    }, 80);
+});
+
+document.querySelectorAll('a, button, .gallery-item, .filter-btn, .quote-dot').forEach(el => {
+    el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+});
+
+// ===== Scroll Progress Bar =====
+const scrollProgress = document.getElementById('scrollProgress');
+
+function updateScrollProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    scrollProgress.style.width = scrollPercent + '%';
+}
+
+window.addEventListener('scroll', updateScrollProgress);
+
 // ===== Navigation Scroll Effect =====
 const navbar = document.getElementById('navbar');
 

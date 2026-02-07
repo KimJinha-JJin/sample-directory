@@ -52,6 +52,15 @@ F1의 전설, **막스 베르스타펜(Max Verstappen)**을 위한 헌정 팬 �
 아직 끝난 프로젝트가 아니다.  
 레이스는 계속된다.
 
+![header](https://capsule-render.vercel.app/api?type=soft&color=0a1628&height=120&section=header&text=Jinha's%20F1%20Archive&fontSize=40&fontColor=e10600&animation=fadeIn)
+
+### Next Ideas
+
+- 모바일 페이지를 고려해볼까?
+- 접근성을 고려해보자!
+- 첫 인트로 화면 이미지를 바꿔볼까?
+- 캘린더를 추가해보자!
+
 ### 📈 My GitHub Stats
 
 ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FKimJinha-JJin%2Fsample-directory&count_bg=%23E10600&title_bg=%230A1628&icon=formula1.svg&icon_color=%23F7DF1E&title=VIBE+VISITORS&edge_flat=false)

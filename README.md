@@ -1,3 +1,5 @@
+![header](https://capsule-render.vercel.app/api?type=soft&color=0a1628&height=120&section=header&text=Jinha's%20F1%20Archive&fontSize=40&fontColor=e10600&animation=fadeIn)
+
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black)
@@ -40,6 +42,8 @@ F1의 전설, **막스 베르스타펜(Max Verstappen)**을 위한 헌정 팬 �
 *Created by [Jin-ha](https://github.com/KimJinha-JJin) with 🧡 and Passion for F1*
 
 ### 📈 My GitHub Stats
+
+![Jin-ha's Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=KimJinha-JJin&theme=dracula&bg_color=0a1628&color=e10600&line=ffd700&point=ffffff&area=true&hide_border=true)
 
 ![Jin-ha's GitHub stats](https://github-readme-stats.vercel.app/api?username=KimJinha-JJin&show_icons=true&theme=merko)
 

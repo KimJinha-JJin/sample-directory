@@ -7,7 +7,8 @@
 
 ## 📺 Max Verstappen Highlights
 [![Max Verstappen 33](https://img.youtube.com/vi/N1abji-8iGY/0.jpg)](https://www.youtube.com/watch?v=N1abji-8iGY)
-*클릭하면 'Simply Lovely'한 막스의 하이라이트 영상으로 이동해!*
+
+![Jinha's GitHub stats](https://github-readme-stats.vercel.app/api?username=KimJinha-JJin&show_icons=true&theme=radical)
 
 # 🏎️ Max Verstappen Fan Site - #1
 > **"Simply, simply lovely!"** - AI와 함께한 즐거운 'Vibe Coding' 프로젝트

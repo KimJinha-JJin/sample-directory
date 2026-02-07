@@ -180,9 +180,8 @@ ul {
     align-items: center;
     justify-content: center;
     background:
-        radial-gradient(ellipse at 20% 50%, rgba(6, 0, 239, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 50%, rgba(225, 6, 0, 0.15) 0%, transparent 50%),
-        var(--gradient-primary);
+        linear-gradient(rgba(10, 10, 26, 0.5), rgba(10, 10, 26, 0.7)),
+        url('hero-bg.jpg') center/cover no-repeat fixed;
     overflow: hidden;
 }
 
@@ -349,7 +348,9 @@ ul {
 
 /* ===== About Section ===== */
 .about-section {
-    background: var(--bg-dark);
+    background:
+        linear-gradient(rgba(10, 10, 26, 0.85), rgba(10, 10, 26, 0.9)),
+        url('about-bg.jpg') center/cover no-repeat fixed;
 }
 
 .about-grid {
@@ -460,8 +461,8 @@ ul {
 /* ===== Stats Section ===== */
 .stats-section {
     background:
-        radial-gradient(ellipse at 30% 50%, rgba(6, 0, 239, 0.08) 0%, transparent 50%),
-        linear-gradient(180deg, var(--bg-dark), var(--rb-navy), var(--bg-dark));
+        linear-gradient(rgba(10, 22, 40, 0.85), rgba(10, 22, 40, 0.9)),
+        url('stats-bg.jpg') center/cover no-repeat fixed;
 }
 
 .stats-grid {
@@ -534,7 +535,9 @@ ul {
 
 /* ===== Career Timeline ===== */
 .career-section {
-    background: var(--bg-dark);
+    background:
+        linear-gradient(rgba(10, 10, 26, 0.85), rgba(10, 10, 26, 0.9)),
+        url('career-bg.jpg') center/cover no-repeat fixed;
 }
 
 .timeline {

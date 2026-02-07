@@ -7,25 +7,6 @@ window.addEventListener('load', () => {
     }, 2200);
 });
 
-// ===== Custom Cursor =====
-const cursorDot = document.getElementById('cursorDot');
-const cursorRing = document.getElementById('cursorRing');
-
-document.addEventListener('mousemove', (e) => {
-    cursorDot.style.left = e.clientX + 'px';
-    cursorDot.style.top = e.clientY + 'px';
-
-    setTimeout(() => {
-        cursorRing.style.left = e.clientX + 'px';
-        cursorRing.style.top = e.clientY + 'px';
-    }, 80);
-});
-
-document.querySelectorAll('a, button, .gallery-item, .filter-btn, .quote-dot').forEach(el => {
-    el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
-    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
-});
-
 // ===== Scroll Progress Bar =====
 const scrollProgress = document.getElementById('scrollProgress');
 

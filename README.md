@@ -1,5 +1,9 @@
-# sample-directory
-testing a vibe coding.
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black)
+
+![F1](https://img.shields.io/badge/F1-Max_Verstappen-E10600?style=for-the-badge&logo=formula1&logoColor=white)
+![Vibe Coding](https://img.shields.io/badge/Vibe-Coding-blueviolet?style=for-the-badge)
 
 # 🏎️ Max Verstappen Fan Site - #1
 > **"Simply, simply lovely!"** - AI와 함께한 즐거운 'Vibe Coding' 프로젝트

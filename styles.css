@@ -695,23 +695,15 @@ ul {
     display: none;
 }
 
-.gallery-placeholder {
+.gallery-item img {
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
-.gallery-icon {
-    font-size: 4rem;
-    opacity: 0.6;
-    transition: var(--transition);
-}
-
-.gallery-item:hover .gallery-icon {
-    opacity: 1;
-    transform: scale(1.2);
+.gallery-item:hover img {
+    transform: scale(1.1);
 }
 
 .gallery-overlay {

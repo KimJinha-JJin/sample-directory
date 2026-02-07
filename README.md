@@ -43,6 +43,8 @@ F1의 전설, **막스 베르스타펜(Max Verstappen)**을 위한 헌정 팬 �
 
 ### 📈 My GitHub Stats
 
+![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FKimJinha-JJin%2Fsample-directory&count_bg=%23E10600&title_bg=%230A1628&icon=formula1.svg&icon_color=%23F7DF1E&title=VIBE+VISITORS&edge_flat=false)
+
 ![Jin-ha's Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=KimJinha-JJin&theme=dracula&bg_color=0a1628&color=e10600&line=ffd700&point=ffffff&area=true&hide_border=true)
 
 ![Jin-ha's GitHub stats](https://github-readme-stats.vercel.app/api?username=KimJinha-JJin&show_icons=true&theme=merko)

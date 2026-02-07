@@ -44,3 +44,5 @@ F1의 전설, **막스 베르스타펜(Max Verstappen)**을 위한 헌정 팬 �
 ![Jin-ha's GitHub stats](https://github-readme-stats.vercel.app/api?username=KimJinha-JJin&show_icons=true&theme=merko)
 
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=KimJinha-JJin&layout=compact&theme=radical)
+
+[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=KimJinha-JJin&theme=dark&show_icons=true)](https://github.com/anuraghazra/github-readme-stats)

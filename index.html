@@ -40,9 +40,9 @@
     <main>
       <section id="hero" class="hero">
         <div class="hero-content">
-          <p class="tag">World Champion • Oracle Red Bull Racing</p>
-          <h1>속도와 집념의 상징, 막스 베르스타펜</h1>
-          <p>
+          <p class="tag" data-hero-tag>World Champion • Oracle Red Bull Racing</p>
+          <h1 data-hero-headline>속도와 집념의 상징, 막스 베르스타펜</h1>
+          <p data-hero-description>
             네덜란드를 대표하는 F1 챔피언. 2015년 최연소 데뷔부터 Red Bull Racing의
             역사적인 타이틀까지, 막스 베르스타펜의 실제 커리어 데이터를 담았습니다.
           </p>
@@ -53,20 +53,7 @@
         </div>
         <div class="hero-card">
           <h3>커리어 핵심 기록</h3>
-          <div class="stats">
-            <div>
-              <span class="stat-value">2015</span>
-              <span class="stat-label">F1 데뷔 (Toro Rosso)</span>
-            </div>
-            <div>
-              <span class="stat-value">2016</span>
-              <span class="stat-label">첫 우승 (스페인 GP)</span>
-            </div>
-            <div>
-              <span class="stat-value">2021-2023</span>
-              <span class="stat-label">월드 챔피언 3연패</span>
-            </div>
-          </div>
+          <div class="stats" data-stats></div>
           <p class="note">* 공식 커리어 연혁 기반 요약입니다.</p>
         </div>
       </section>
@@ -76,20 +63,7 @@
           <h2>시즌 하이라이트</h2>
           <p>폭발적인 레이스 감각을 보여준 주요 순간들을 모았습니다.</p>
         </div>
-        <div class="cards">
-          <article class="card">
-            <h3>2016 스페인 GP 첫 승</h3>
-            <p>Red Bull 첫 경기에서 우승하며 최연소 그랑프리 우승 기록.</p>
-          </article>
-          <article class="card">
-            <h3>2021 시즌 챔피언 결정전</h3>
-            <p>치열한 경쟁 끝에 첫 월드 챔피언 타이틀을 획득.</p>
-          </article>
-          <article class="card">
-            <h3>2023 시즌 기록</h3>
-            <p>한 시즌 19승으로 최다 승 기록을 경신하며 압도적 퍼포먼스.</p>
-          </article>
-        </div>
+        <div class="cards" data-highlights></div>
       </section>
 
       <section id="timeline" class="timeline">
@@ -97,24 +71,7 @@
           <h2>커리어 타임라인</h2>
           <p>카트에서 시작해 F1의 정점까지, 성장의 순간을 한눈에.</p>
         </div>
-        <div class="timeline-grid">
-          <div class="timeline-item">
-            <h4>2015 · 데뷔</h4>
-            <p>토로 로쏘와 함께 F1 최연소 데뷔 기록을 세움.</p>
-          </div>
-          <div class="timeline-item">
-            <h4>2016 · 첫 승</h4>
-            <p>스페인 GP에서 Red Bull 첫 레이스 우승.</p>
-          </div>
-          <div class="timeline-item">
-            <h4>2021 · 첫 챔피언</h4>
-            <p>시즌 마지막까지 이어진 경쟁 끝에 첫 타이틀 획득.</p>
-          </div>
-          <div class="timeline-item">
-            <h4>2023 · 기록 경신</h4>
-            <p>한 시즌 19승, 최다 승 기록으로 새로운 기준 확립.</p>
-          </div>
-        </div>
+        <div class="timeline-grid" data-timeline></div>
       </section>
 
       <section id="gallery" class="gallery">
@@ -157,10 +114,12 @@
 
     <footer class="site-footer">
       <p>MV33 Fan Zone © 2024. 팬 커뮤니티의 비공식 사이트입니다.</p>
+      <p class="note">커리어 데이터는 공개 기록 기반 요약입니다.</p>
       <div class="footer-links">
         <a href="#hero">상단으로</a>
         <a href="#news">구독하기</a>
       </div>
     </footer>
+    <script src="script.js"></script>
   </body>
 </html>

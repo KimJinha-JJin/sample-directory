@@ -1,0 +1,57 @@
+{
+  "hero": {
+    "tag": "World Champion • Oracle Red Bull Racing",
+    "headline": "속도와 집념의 상징, 막스 베르스타펜",
+    "description": "네덜란드를 대표하는 F1 챔피언. 2015년 최연소 데뷔부터 Red Bull Racing의 역사적인 타이틀까지, 막스 베르스타펜의 커리어를 요약합니다."
+  },
+  "stats": [
+    {
+      "value": "2015",
+      "label": "F1 데뷔 (Toro Rosso)"
+    },
+    {
+      "value": "2016",
+      "label": "첫 우승 (스페인 GP)"
+    },
+    {
+      "value": "2021–2023",
+      "label": "월드 챔피언 3연패"
+    }
+  ],
+  "highlights": [
+    {
+      "title": "2016 스페인 GP 첫 승",
+      "description": "Red Bull 첫 경기에서 우승하며 최연소 그랑프리 우승 기록을 세움."
+    },
+    {
+      "title": "2021 시즌 챔피언 결정전",
+      "description": "마지막 라운드까지 이어진 경쟁 끝에 첫 월드 챔피언 타이틀 획득."
+    },
+    {
+      "title": "2023 시즌 기록",
+      "description": "한 시즌 19승으로 최다 승 기록을 경신하며 압도적 퍼포먼스."
+    }
+  ],
+  "timeline": [
+    {
+      "year": "2015",
+      "title": "F1 데뷔",
+      "description": "토로 로쏘와 함께 F1 최연소 데뷔 기록을 세움."
+    },
+    {
+      "year": "2016",
+      "title": "첫 승",
+      "description": "스페인 GP에서 Red Bull 첫 레이스 우승."
+    },
+    {
+      "year": "2021",
+      "title": "첫 챔피언",
+      "description": "시즌 마지막까지 이어진 경쟁 끝에 첫 타이틀 획득."
+    },
+    {
+      "year": "2023",
+      "title": "기록 경신",
+      "description": "한 시즌 19승, 최다 승 기록으로 새로운 기준 확립."
+    }
+  ]
+}

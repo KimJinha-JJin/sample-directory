@@ -841,8 +841,9 @@ ul {
     background: var(--bg-dark);
     z-index: 9999;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
+    overflow: hidden;
     transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
@@ -851,41 +852,27 @@ ul {
     visibility: hidden;
 }
 
-.loader-content {
-    text-align: center;
-}
-
-.loader-can {
-    position: relative;
-    width: 120px;
-    height: 200px;
-    background: linear-gradient(to right, rgba(30, 58, 95, 0.8), rgba(10, 22, 40, 0.8));
-    border-radius: 15px;
-    border: 3px solid var(--rb-dark-blue);
-    overflow: hidden;
-    margin-bottom: 2rem;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(225, 6, 0, 0.3);
-}
-
-.loader-can-inner {
-    position: relative;
+.loader-background {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
 }
 
-.loader-liquid-fill {
+.loader-liquid-bg {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 0;
-    background: linear-gradient(to top, rgba(225, 6, 0, 0.9), rgba(255, 215, 0, 0.7));
-    animation: fillLiquid 2s ease-in-out forwards;
-    box-shadow: inset 0 -2px 8px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to top, rgba(225, 6, 0, 0.7), rgba(255, 215, 0, 0.5));
+    animation: fillLiquidBg 2s ease-in-out forwards;
+    box-shadow: inset 0 -4px 20px rgba(0, 0, 0, 0.4);
 }
 
-.loader-bubbles {
+.loader-bubbles-bg {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -893,63 +880,113 @@ ul {
     left: 0;
 }
 
-.bubble {
+.bubble-bg {
     position: absolute;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 215, 0, 0.4));
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), rgba(255, 215, 0, 0.3));
     border-radius: 50%;
     opacity: 0;
-    animation: bubbleRise 2s ease-in infinite;
+    animation: bubbleRiseBg 2.5s ease-in infinite;
 }
 
-.bubble:nth-child(1) {
-    width: 8px;
-    height: 8px;
-    left: 20%;
+.bubble-bg:nth-child(1) {
+    width: 20px;
+    height: 20px;
+    left: 15%;
     animation-delay: 0s;
 }
 
-.bubble:nth-child(2) {
-    width: 6px;
-    height: 6px;
-    left: 40%;
+.bubble-bg:nth-child(2) {
+    width: 15px;
+    height: 15px;
+    left: 25%;
     animation-delay: 0.3s;
 }
 
-.bubble:nth-child(3) {
-    width: 7px;
-    height: 7px;
-    left: 60%;
+.bubble-bg:nth-child(3) {
+    width: 18px;
+    height: 18px;
+    left: 35%;
     animation-delay: 0.6s;
 }
 
-.bubble:nth-child(4) {
-    width: 5px;
-    height: 5px;
-    left: 30%;
+.bubble-bg:nth-child(4) {
+    width: 12px;
+    height: 12px;
+    left: 50%;
     animation-delay: 0.9s;
 }
 
-.bubble:nth-child(5) {
-    width: 6px;
-    height: 6px;
-    left: 70%;
+.bubble-bg:nth-child(5) {
+    width: 16px;
+    height: 16px;
+    left: 65%;
     animation-delay: 1.2s;
 }
 
+.bubble-bg:nth-child(6) {
+    width: 14px;
+    height: 14px;
+    left: 75%;
+    animation-delay: 0.4s;
+}
+
+.bubble-bg:nth-child(7) {
+    width: 19px;
+    height: 19px;
+    left: 85%;
+    animation-delay: 0.8s;
+}
+
+.bubble-bg:nth-child(8) {
+    width: 13px;
+    height: 13px;
+    left: 45%;
+    animation-delay: 1.5s;
+}
+
+.loader-bull {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+    animation: bullFloat 2s ease-in-out forwards;
+    z-index: 10;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+}
+
+.loader-bull svg {
+    width: 100%;
+    height: 100%;
+}
+
+.loader-content {
+    position: relative;
+    z-index: 20;
+    text-align: center;
+    padding: 2rem;
+    background: rgba(10, 10, 26, 0.4);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .loader-text {
-    font-size: 1.2rem;
+    font-size: 2rem;
     font-weight: 700;
     letter-spacing: 8px;
     text-transform: uppercase;
-    margin: 1rem 0 2rem;
+    margin-bottom: 1.5rem;
     color: var(--text-primary);
+    text-shadow: 0 0 20px rgba(225, 6, 0, 0.5);
 }
 
 .loader-bar {
-    width: 200px;
-    height: 3px;
+    width: 300px;
+    height: 4px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
+    border-radius: 4px;
     margin: 0 auto;
     overflow: hidden;
 }
@@ -958,33 +995,50 @@ ul {
     width: 0;
     height: 100%;
     background: var(--gradient-accent);
-    border-radius: 3px;
+    border-radius: 4px;
     animation: loaderFill 2s ease-in-out forwards;
+    box-shadow: 0 0 10px rgba(225, 6, 0, 0.6);
 }
 
-@keyframes fillLiquid {
+@keyframes fillLiquidBg {
     0% {
         height: 0;
     }
     100% {
-        height: 85%;
+        height: 70%;
     }
 }
 
-@keyframes bubbleRise {
+@keyframes bubbleRiseBg {
     0% {
-        bottom: -10px;
+        bottom: -30px;
         opacity: 0;
     }
-    10% {
-        opacity: 1;
+    5% {
+        opacity: 0.8;
     }
-    90% {
-        opacity: 1;
+    95% {
+        opacity: 0.8;
     }
     100% {
         bottom: 100%;
         opacity: 0;
+    }
+}
+
+@keyframes bullFloat {
+    0% {
+        bottom: -100px;
+        opacity: 0;
+        transform: translateX(-50%) scale(0.8);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        bottom: 20%;
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
     }
 }
 

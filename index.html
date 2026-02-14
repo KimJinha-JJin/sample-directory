@@ -9,19 +9,37 @@
 <body>
     <!-- Loading Screen -->
     <div class="loader" id="loader">
-        <div class="loader-content">
-            <div class="loader-can">
-                <div class="loader-can-inner">
-                    <div class="loader-liquid-fill"></div>
-                    <div class="loader-bubbles">
-                        <span class="bubble"></span>
-                        <span class="bubble"></span>
-                        <span class="bubble"></span>
-                        <span class="bubble"></span>
-                        <span class="bubble"></span>
-                    </div>
-                </div>
+        <div class="loader-background">
+            <div class="loader-liquid-bg"></div>
+            <div class="loader-bubbles-bg">
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
             </div>
+            <div class="loader-bull">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Bull horns -->
+                    <path d="M 60 80 Q 40 60 30 40" stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
+                    <path d="M 140 80 Q 160 60 170 40" stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
+                    <!-- Bull head -->
+                    <circle cx="100" cy="100" r="40" fill="white"/>
+                    <!-- Bull eyes -->
+                    <circle cx="85" cy="90" r="5" fill="#e10600"/>
+                    <circle cx="115" cy="90" r="5" fill="#e10600"/>
+                    <!-- Bull snout -->
+                    <ellipse cx="100" cy="110" rx="15" ry="12" fill="#e10600"/>
+                    <!-- Bull nostrils -->
+                    <circle cx="93" cy="110" r="2" fill="white"/>
+                    <circle cx="107" cy="110" r="2" fill="white"/>
+                </svg>
+            </div>
+        </div>
+        <div class="loader-content">
             <div class="loader-text">MAX VERSTAPPEN</div>
             <div class="loader-bar">
                 <div class="loader-bar-fill"></div>

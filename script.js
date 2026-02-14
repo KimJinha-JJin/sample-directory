@@ -1,3 +1,59 @@
+// ===== Custom Cursor Animation =====
+const cursorDot = document.createElement('div');
+cursorDot.classList.add('cursor-dot');
+document.body.appendChild(cursorDot);
+
+const cursorOutline = document.createElement('div');
+cursorOutline.classList.add('cursor-outline');
+document.body.appendChild(cursorOutline);
+
+let mouseX = 0;
+let mouseY = 0;
+let dotX = 0;
+let dotY = 0;
+let outlineX = 0;
+let outlineY = 0;
+
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    cursorDot.style.left = mouseX + 'px';
+    cursorDot.style.top = mouseY + 'px';
+    
+    // Smooth trailing effect for outline
+    outlineX += (mouseX - outlineX) * 0.3;
+    outlineY += (mouseY - outlineY) * 0.3;
+    cursorOutline.style.left = outlineX + 'px';
+    cursorOutline.style.top = outlineY + 'px';
+});
+
+// Cursor effects on interactive elements
+const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .stat-card, .about-card, .gallery-item, .filter-btn');
+
+interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+        cursorDot.classList.add('active');
+        cursorOutline.classList.add('active');
+    });
+    
+    el.addEventListener('mouseleave', () => {
+        cursorDot.classList.remove('active');
+        cursorOutline.classList.remove('active');
+    });
+});
+
+// Hide cursor when leaving window
+document.addEventListener('mouseleave', () => {
+    cursorDot.style.opacity = '0';
+    cursorOutline.style.opacity = '0';
+});
+
+document.addEventListener('mouseenter', () => {
+    cursorDot.style.opacity = '1';
+    cursorOutline.style.opacity = '1';
+});
+
 // ===== Loading Screen =====
 const loader = document.getElementById('loader');
 
@@ -202,4 +258,18 @@ window.addEventListener('scroll', () => {
 document.addEventListener('DOMContentLoaded', () => {
     checkTimelineVisibility();
     updateActiveNav();
+    
+    // Re-add cursor effects to dynamically loaded elements
+    const allInteractiveElements = document.querySelectorAll('a, button, input, textarea, select, .stat-card, .about-card, .gallery-item, .filter-btn');
+    allInteractiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursorDot.classList.add('active');
+            cursorOutline.classList.add('active');
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            cursorDot.classList.remove('active');
+            cursorOutline.classList.remove('active');
+        });
+    });
 });

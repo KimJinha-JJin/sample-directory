@@ -1081,7 +1081,7 @@ ul {
         opacity: 1;
     }
     100% {
-        bottom: 50%;
+        bottom: 35%;
         opacity: 1;
         transform: scale(1);
     }

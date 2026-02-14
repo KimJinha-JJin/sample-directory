@@ -867,7 +867,7 @@ ul {
     left: 0;
     width: 100%;
     height: 0;
-    background: linear-gradient(to top, rgba(225, 6, 0, 0.7), rgba(255, 215, 0, 0.5));
+    background: linear-gradient(to top, rgba(225, 6, 0, 0.8), rgba(255, 215, 0, 0.6));
     animation: fillLiquidBg 2s ease-in-out forwards;
     box-shadow: inset 0 -4px 20px rgba(0, 0, 0, 0.4);
 }
@@ -944,22 +944,47 @@ ul {
     animation-delay: 1.5s;
 }
 
-.loader-bull {
+.loader-stars {
     position: absolute;
-    bottom: 15%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 200px;
-    opacity: 0;
-    animation: bullFloat 2s ease-in-out forwards;
-    z-index: 10;
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
-}
-
-.loader-bull svg {
     width: 100%;
     height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 15;
+}
+
+.star {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    opacity: 0;
+    animation: starRise 2s ease-in-out forwards;
+}
+
+.star::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+}
+
+.star:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.star:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.star:nth-child(3) {
+    animation-delay: 0.8s;
+}
+
+.star:nth-child(4) {
+    animation-delay: 1.1s;
 }
 
 .loader-content {
@@ -1005,7 +1030,7 @@ ul {
         height: 0;
     }
     100% {
-        height: 70%;
+        height: 100%;
     }
 }
 
@@ -1026,19 +1051,19 @@ ul {
     }
 }
 
-@keyframes bullFloat {
+@keyframes starRise {
     0% {
-        bottom: -100px;
+        bottom: -50px;
         opacity: 0;
-        transform: translateX(-50%) scale(0.8);
+        transform: scale(0.5);
     }
     50% {
         opacity: 1;
     }
     100% {
-        bottom: 20%;
+        bottom: 50%;
         opacity: 1;
-        transform: translateX(-50%) scale(1);
+        transform: scale(1);
     }
 }
 

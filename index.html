@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Max Verstappen Fan Site - #1</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
 <body>
     <!-- Loading Screen -->
@@ -34,7 +33,7 @@
             <li><a href="#stats">Stats</a></li>
             <li><a href="#career">Career</a></li>
             <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#map">Map</a></li>
+            <li><a href="#performance">Seasons</a></li>
         </ul>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
             <span></span>
@@ -304,14 +303,57 @@
         </div>
     </section>
 
-    <!-- Memorial Places Map Section -->
-    <section class="section map-section" id="map">
+    <!-- Season Performance Section -->
+    <section class="section chart-section" id="performance">
         <div class="container">
-            <h2 class="section-title">Memorial Places</h2>
-            <p class="map-subtitle">막스 베르스타펜의 커리어를 만든 전 세계의 특별한 장소들</p>
-        </div>
-        <div class="map-wrapper">
-            <div id="verstappen-map"></div>
+            <h2 class="section-title">시즌별 성적</h2>
+            <p class="chart-subtitle">막스 베르스타펜의 F1 커리어 시즌별 상세 기록</p>
+
+            <!-- Bar Chart: Wins per season -->
+            <div class="bar-chart-wrapper">
+                <div class="bar-chart-title">시즌별 우승 횟수 <span>(최다: 19승 · 2023)</span></div>
+                <div class="bar-chart" id="barChart">
+                    <div class="bar-row"><span class="bar-year">2015</span><div class="bar-track"><div class="bar-fill" style="--bar-w: 0%"></div></div><span class="bar-val">0</span></div>
+                    <div class="bar-row"><span class="bar-year">2016</span><div class="bar-track"><div class="bar-fill" style="--bar-w: 5.3%"></div></div><span class="bar-val">1</span></div>
+                    <div class="bar-row"><span class="bar-year">2017</span><div class="bar-track"><div class="bar-fill" style="--bar-w: 10.5%"></div></div><span class="bar-val">2</span></div>
+                    <div class="bar-row"><span class="bar-year">2018</span><div class="bar-track"><div class="bar-fill" style="--bar-w: 10.5%"></div></div><span class="bar-val">2</span></div>
+                    <div class="bar-row"><span class="bar-year">2019</span><div class="bar-track"><div class="bar-fill" style="--bar-w: 15.8%"></div></div><span class="bar-val">3</span></div>
+                    <div class="bar-row"><span class="bar-year">2020</span><div class="bar-track"><div class="bar-fill" style="--bar-w: 10.5%"></div></div><span class="bar-val">2</span></div>
+                    <div class="bar-row champion"><span class="bar-year">2021 ⭐</span><div class="bar-track"><div class="bar-fill champion" style="--bar-w: 52.6%"></div></div><span class="bar-val">10</span></div>
+                    <div class="bar-row champion"><span class="bar-year">2022 ⭐</span><div class="bar-track"><div class="bar-fill champion" style="--bar-w: 78.9%"></div></div><span class="bar-val">15</span></div>
+                    <div class="bar-row champion"><span class="bar-year">2023 ⭐</span><div class="bar-track"><div class="bar-fill champion" style="--bar-w: 100%"></div></div><span class="bar-val">19</span></div>
+                    <div class="bar-row champion"><span class="bar-year">2024 ⭐</span><div class="bar-track"><div class="bar-fill champion" style="--bar-w: 42.1%"></div></div><span class="bar-val">8</span></div>
+                </div>
+            </div>
+
+            <!-- Season Stats Table -->
+            <div class="season-table-wrapper">
+                <table class="season-table">
+                    <thead>
+                        <tr>
+                            <th>시즌</th>
+                            <th>팀</th>
+                            <th>우승</th>
+                            <th>포디엄</th>
+                            <th>폴포지션</th>
+                            <th>포인트</th>
+                            <th>순위</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2015</td><td>Toro Rosso</td><td>0</td><td>0</td><td>0</td><td>49</td><td>12위</td></tr>
+                        <tr><td>2016</td><td>Red Bull</td><td>1</td><td>7</td><td>0</td><td>204</td><td>5위</td></tr>
+                        <tr><td>2017</td><td>Red Bull</td><td>2</td><td>8</td><td>0</td><td>168</td><td>6위</td></tr>
+                        <tr><td>2018</td><td>Red Bull</td><td>2</td><td>11</td><td>0</td><td>249</td><td>4위</td></tr>
+                        <tr><td>2019</td><td>Red Bull</td><td>3</td><td>9</td><td>2</td><td>278</td><td>3위</td></tr>
+                        <tr><td>2020</td><td>Red Bull</td><td>2</td><td>11</td><td>0</td><td>214</td><td>3위</td></tr>
+                        <tr class="champion-row"><td>2021 ⭐</td><td>Red Bull</td><td>10</td><td>18</td><td>10</td><td>395.5</td><td><strong>🏆 챔피언</strong></td></tr>
+                        <tr class="champion-row"><td>2022 ⭐</td><td>Red Bull</td><td>15</td><td>17</td><td>14</td><td>454</td><td><strong>🏆 챔피언</strong></td></tr>
+                        <tr class="champion-row"><td>2023 ⭐</td><td>Red Bull</td><td>19</td><td>21</td><td>9</td><td>575</td><td><strong>🏆 챔피언</strong></td></tr>
+                        <tr class="champion-row"><td>2024 ⭐</td><td>Red Bull</td><td>8</td><td>14</td><td>2</td><td>437</td><td><strong>🏆 챔피언</strong></td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
 
@@ -359,7 +401,7 @@
                         <li><a href="#stats">Stats</a></li>
                         <li><a href="#career">Career</a></li>
                         <li><a href="#gallery">Gallery</a></li>
-                        <li><a href="#map">Map</a></li>
+                        <li><a href="#performance">Seasons</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -390,7 +432,6 @@
         </div>
     </footer>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN2GECk=" crossorigin=""></script>
     <script src="script.js"></script>
 </body>
 </html>

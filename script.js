@@ -222,121 +222,17 @@ window.addEventListener('scroll', () => {
     checkTimelineVisibility();
 });
 
-// ===== Leaflet Memorial Map =====
-const mapLocations = [
-    {
-        lat: 50.9307, lng: 5.3317,
-        title: "출생지",
-        location: "Hasselt, Belgium",
-        desc: "1997년 9월 30일, 막스 베르스타펜이 태어난 곳",
-        icon: "🏠"
-    },
-    {
-        lat: -37.8497, lng: 144.9680,
-        title: "F1 데뷔 (2015 호주 GP)",
-        location: "Albert Park Circuit, Melbourne",
-        desc: "17세의 나이로 역대 최연소 F1 드라이버로 데뷔",
-        icon: "🏎️"
-    },
-    {
-        lat: 47.5789, lng: 19.2486,
-        title: "첫 포디엄 (2015 헝가리 GP)",
-        location: "Hungaroring, Budapest",
-        desc: "데뷔 시즌 첫 포디엄 피니시",
-        icon: "🥉"
-    },
-    {
-        lat: 41.5700, lng: 2.2610,
-        title: "첫 우승 (2016 스페인 GP)",
-        location: "Circuit de Catalunya, Barcelona",
-        desc: "18세 228일 — 역대 최연소 F1 우승 기록",
-        icon: "🏆"
-    },
-    {
-        lat: 52.0406, lng: -0.7594,
-        title: "Red Bull Racing 공장",
-        location: "Milton Keynes, UK",
-        desc: "Oracle Red Bull Racing 본사 및 제조 시설",
-        icon: "🏭"
-    },
-    {
-        lat: 24.4672, lng: 54.6031,
-        title: "첫 월드챔피언십 (2021)",
-        location: "Yas Marina Circuit, Abu Dhabi",
-        desc: "마지막 랩 극적인 역전으로 첫 월드 챔피언 등극",
-        icon: "⭐"
-    },
-    {
-        lat: 34.8431, lng: 136.5406,
-        title: "2번째 월드챔피언십 (2022)",
-        location: "Suzuka Circuit, Japan",
-        desc: "스즈카에서 2연속 월드 챔피언십 확정",
-        icon: "⭐"
-    },
-    {
-        lat: 36.1699, lng: -115.1398,
-        title: "4번째 월드챔피언십 (2024)",
-        location: "Las Vegas Strip Circuit, USA",
-        desc: "라스베가스 스트리트 서킷에서 4번째 타이틀 획득",
-        icon: "⭐"
-    }
-];
-
-function initMap() {
-    const mapEl = document.getElementById('verstappen-map');
-    if (!mapEl || typeof L === 'undefined') return;
-    if (mapEl._leaflet_id) return; // 이중 초기화 방지
-
-    const verstappenMap = L.map(mapEl, {
-        scrollWheelZoom: false,
-        zoomControl: true
-    });
-
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 19
-    }).addTo(verstappenMap);
-
-    const bounds = [];
-
-    mapLocations.forEach(loc => {
-        const markerIcon = L.divIcon({
-            className: '',
-            html: `<div class="custom-marker"><div class="custom-marker-inner">${loc.icon}</div></div>`,
-            iconSize: [38, 38],
-            iconAnchor: [19, 38],
-            popupAnchor: [0, -40]
-        });
-
-        const marker = L.marker([loc.lat, loc.lng], { icon: markerIcon }).addTo(verstappenMap);
-        marker.bindPopup(`
-            <div class="map-popup-title">${loc.title}</div>
-            <div class="map-popup-location">${loc.location}</div>
-            <div class="map-popup-desc">${loc.desc}</div>
-        `);
-        bounds.push([loc.lat, loc.lng]);
-    });
-
-    verstappenMap.fitBounds(bounds, { padding: [40, 40] });
-
-    // 지도가 뷰포트에 진입할 때마다 타일 재렌더링 (스크롤 후 진입 시 빈 화면 방지)
-    const observer = new IntersectionObserver((entries) => {
+// ===== Bar Chart Animation =====
+const barChart = document.getElementById('barChart');
+if (barChart) {
+    const chartObserver = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
-            verstappenMap.invalidateSize();
-            verstappenMap.fitBounds(bounds, { padding: [40, 40] });
+            barChart.classList.add('animated');
+            chartObserver.disconnect();
         }
-    }, { threshold: 0.1 });
-    observer.observe(mapEl);
-
-    // 초기 로드 시 fallback
-    setTimeout(() => {
-        verstappenMap.invalidateSize();
-        verstappenMap.fitBounds(bounds, { padding: [40, 40] });
-    }, 500);
+    }, { threshold: 0.2 });
+    chartObserver.observe(barChart);
 }
-
-window.addEventListener('load', initMap);
 
 // ===== Initial Check =====
 document.addEventListener('DOMContentLoaded', () => {

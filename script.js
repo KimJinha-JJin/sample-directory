@@ -271,7 +271,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusEl        = document.getElementById('gesture-status');
     const scrollUpZone    = document.getElementById('gesture-scroll-up');
     const scrollDownZone  = document.getElementById('gesture-scroll-down');
-    const swipeHintEl     = document.getElementById('gesture-swipe-hint');
+    const swipeHintEl      = document.getElementById('gesture-swipe-hint');
+    const scrollToggleBtn  = document.getElementById('gesture-scroll-toggle');
 
     if (!handCanvas || !video || !toggleBtn) return;
 
@@ -320,10 +321,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let scrollDir    = 0;   // -1 up, 0 stopped, 1 down
 
     // Finger-gesture detection state
-    let gestureHoldCount = 0;
-    let lastGestureMs    = 0;
-    let currentGesture   = null;   // 'one' | 'v' | null
-    let gestureHintTimer = null;
+    let scrollGestureEnabled = true;  // ☝️/✌️ 스크롤 제스처 활성화 여부
+    let gestureHoldCount     = 0;
+    let lastGestureMs        = 0;
+    let currentGesture       = null;   // 'one' | 'v' | null
+    let gestureHintTimer     = null;
 
     // --- Continuous scroll helpers ---
     function startContinuousScroll(dir) {
@@ -371,6 +373,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function classifyGesture(lm) {
+        // 엄지가 검지에 가까우면 핀치 동작 중 → 제스처 무시 (핀치-스크롤 충돌 방지)
+        const thumbToIndex = Math.hypot(lm[4].x - lm[8].x, lm[4].y - lm[8].y);
+        if (thumbToIndex < 0.12) return null;  // 핀치 임계값(0.065)의 약 2배
+
         const indexUp  = isExtended(lm[8],  lm[6]);   // index tip vs index PIP
         const middleUp = isExtended(lm[12], lm[10]);  // middle tip vs middle PIP
         const ringUp   = isExtended(lm[16], lm[14]);  // ring tip vs ring PIP
@@ -382,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function detectFingerGesture(lm, pinching) {
-        if (pinching || grabbedWord) {
+        if (!scrollGestureEnabled || pinching || grabbedWord) {
             gestureHoldCount = 0;
             currentGesture   = null;
             return;
@@ -769,6 +775,27 @@ document.addEventListener('DOMContentLoaded', () => {
         statusEl.textContent = msg;
     }
 
+    // --- 스크롤 제스처 토글 버튼 (☝️/✌️ 활성화 여부) ---
+    function updateScrollToggleUI() {
+        if (!scrollToggleBtn) return;
+        if (scrollGestureEnabled) {
+            scrollToggleBtn.classList.add('active');
+            scrollToggleBtn.innerHTML = '<span class="gesture-icon">🔢</span> 스크롤 ON';
+        } else {
+            scrollToggleBtn.classList.remove('active');
+            scrollToggleBtn.innerHTML = '<span class="gesture-icon">🔢</span> 스크롤 OFF';
+        }
+    }
+
+    if (scrollToggleBtn) {
+        scrollToggleBtn.addEventListener('click', () => {
+            scrollGestureEnabled = !scrollGestureEnabled;
+            gestureHoldCount = 0;
+            currentGesture   = null;
+            updateScrollToggleUI();
+        });
+    }
+
     // --- Toggle button click ---
     toggleBtn.addEventListener('click', async () => {
         gestureActive = !gestureActive;
@@ -782,6 +809,11 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollUpZone.style.display    = 'flex';
             scrollDownZone.style.display  = 'flex';
             swipeHintEl.style.display     = 'block';
+
+            // 스크롤 제스처 버튼 초기화 후 표시
+            scrollGestureEnabled = true;
+            updateScrollToggleUI();
+            if (scrollToggleBtn) scrollToggleBtn.style.display = 'flex';
 
             if (!mediapipeReady) {
                 await initHandTracking();
@@ -798,6 +830,7 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollUpZone.style.display    = 'none';
             scrollDownZone.style.display  = 'none';
             swipeHintEl.style.display     = 'none';
+            if (scrollToggleBtn) scrollToggleBtn.style.display = 'none';
 
             hCtx.clearRect(0, 0, handCanvas.width, handCanvas.height);
             stopContinuousScroll();

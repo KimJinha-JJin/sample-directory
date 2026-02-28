@@ -1002,6 +1002,28 @@ ul {
     letter-spacing: 0.2px;
 }
 
+
+.video-note {
+    margin-top: 0.45rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.78rem;
+    line-height: 1.4;
+}
+
+.video-link {
+    display: inline-flex;
+    margin-top: 0.6rem;
+    color: var(--rb-yellow);
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+}
+
+.video-link:hover {
+    border-bottom-color: var(--rb-yellow);
+}
+
 /* ===== Nicknames Word Cloud ===== */
 @keyframes wc-float {
     0%, 100% {

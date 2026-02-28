@@ -6,7 +6,7 @@ customCursor.innerHTML = `
         <path d="M1,1 L1,21 L6,16 L10,25 L14,23 L10,14 L17,14 Z"
               fill="#e10600" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
     </svg>
-    <img class="cursor-car" src="race-car-cursor.png" alt="">`;
+    <img class="cursor-car" src="F1.svg.png" alt="">`;
 document.body.appendChild(customCursor);
 
 document.addEventListener('mousemove', (e) => {

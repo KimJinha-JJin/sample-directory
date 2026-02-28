@@ -314,38 +314,51 @@ const mapLocations = [
     }
 ];
 
-const verstappenMap = L.map('verstappen-map', {
-    scrollWheelZoom: false,
-    zoomControl: true
-});
+function initMap() {
+    const mapEl = document.getElementById('verstappen-map');
+    if (!mapEl || typeof L === 'undefined') return;
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd',
-    maxZoom: 19
-}).addTo(verstappenMap);
-
-const bounds = [];
-
-mapLocations.forEach(loc => {
-    const markerIcon = L.divIcon({
-        className: '',
-        html: `<div class="custom-marker"><div class="custom-marker-inner">${loc.icon}</div></div>`,
-        iconSize: [38, 38],
-        iconAnchor: [19, 38],
-        popupAnchor: [0, -40]
+    const verstappenMap = L.map(mapEl, {
+        scrollWheelZoom: false,
+        zoomControl: true
     });
 
-    const marker = L.marker([loc.lat, loc.lng], { icon: markerIcon }).addTo(verstappenMap);
-    marker.bindPopup(`
-        <div class="map-popup-title">${loc.title}</div>
-        <div class="map-popup-location">${loc.location}</div>
-        <div class="map-popup-desc">${loc.desc}</div>
-    `);
-    bounds.push([loc.lat, loc.lng]);
-});
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+    }).addTo(verstappenMap);
 
-verstappenMap.fitBounds(bounds, { padding: [40, 40] });
+    const bounds = [];
+
+    mapLocations.forEach(loc => {
+        const markerIcon = L.divIcon({
+            className: '',
+            html: `<div class="custom-marker"><div class="custom-marker-inner">${loc.icon}</div></div>`,
+            iconSize: [38, 38],
+            iconAnchor: [19, 38],
+            popupAnchor: [0, -40]
+        });
+
+        const marker = L.marker([loc.lat, loc.lng], { icon: markerIcon }).addTo(verstappenMap);
+        marker.bindPopup(`
+            <div class="map-popup-title">${loc.title}</div>
+            <div class="map-popup-location">${loc.location}</div>
+            <div class="map-popup-desc">${loc.desc}</div>
+        `);
+        bounds.push([loc.lat, loc.lng]);
+    });
+
+    verstappenMap.fitBounds(bounds, { padding: [40, 40] });
+
+    // 컨테이너 크기가 확정된 후 타일 재렌더링
+    setTimeout(() => {
+        verstappenMap.invalidateSize();
+        verstappenMap.fitBounds(bounds, { padding: [40, 40] });
+    }, 300);
+}
+
+window.addEventListener('load', initMap);
 
 // ===== Initial Check =====
 document.addEventListener('DOMContentLoaded', () => {

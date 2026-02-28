@@ -1,57 +1,25 @@
-// ===== Custom Cursor Animation =====
-const cursorDot = document.createElement('div');
-cursorDot.classList.add('cursor-dot');
-document.body.appendChild(cursorDot);
-
-const cursorOutline = document.createElement('div');
-cursorOutline.classList.add('cursor-outline');
-document.body.appendChild(cursorOutline);
-
-let mouseX = 0;
-let mouseY = 0;
-let dotX = 0;
-let dotY = 0;
-let outlineX = 0;
-let outlineY = 0;
+// ===== Custom Cursor =====
+const customCursor = document.createElement('div');
+customCursor.classList.add('custom-cursor');
+customCursor.innerHTML = `
+    <svg class="cursor-arrow" xmlns="http://www.w3.org/2000/svg" width="22" height="26" viewBox="0 0 22 26">
+        <path d="M1,1 L1,21 L6,16 L10,25 L14,23 L10,14 L17,14 Z"
+              fill="#e10600" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>
+    <img class="cursor-car" src="race-car-cursor.png" alt="">`;
+document.body.appendChild(customCursor);
 
 document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    
-    cursorDot.style.left = mouseX + 'px';
-    cursorDot.style.top = mouseY + 'px';
-    
-    // Smooth trailing effect for outline
-    outlineX += (mouseX - outlineX) * 0.3;
-    outlineY += (mouseY - outlineY) * 0.3;
-    cursorOutline.style.left = outlineX + 'px';
-    cursorOutline.style.top = outlineY + 'px';
+    customCursor.style.left = e.clientX + 'px';
+    customCursor.style.top = e.clientY + 'px';
 });
 
-// Cursor effects on interactive elements
-const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .stat-card, .about-card, .gallery-item, .filter-btn');
-
-interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        cursorDot.classList.add('active');
-        cursorOutline.classList.add('active');
-    });
-    
-    el.addEventListener('mouseleave', () => {
-        cursorDot.classList.remove('active');
-        cursorOutline.classList.remove('active');
-    });
-});
-
-// Hide cursor when leaving window
 document.addEventListener('mouseleave', () => {
-    cursorDot.style.opacity = '0';
-    cursorOutline.style.opacity = '0';
+    customCursor.style.opacity = '0';
 });
 
 document.addEventListener('mouseenter', () => {
-    cursorDot.style.opacity = '1';
-    cursorOutline.style.opacity = '1';
+    customCursor.style.opacity = '1';
 });
 
 // ===== Loading Screen =====
@@ -364,18 +332,4 @@ window.addEventListener('load', initMap);
 document.addEventListener('DOMContentLoaded', () => {
     checkTimelineVisibility();
     updateActiveNav();
-    
-    // Re-add cursor effects to dynamically loaded elements
-    const allInteractiveElements = document.querySelectorAll('a, button, input, textarea, select, .stat-card, .about-card, .gallery-item, .filter-btn');
-    allInteractiveElements.forEach(el => {
-        el.addEventListener('mouseenter', () => {
-            cursorDot.classList.add('active');
-            cursorOutline.classList.add('active');
-        });
-        
-        el.addEventListener('mouseleave', () => {
-            cursorDot.classList.remove('active');
-            cursorOutline.classList.remove('active');
-        });
-    });
 });

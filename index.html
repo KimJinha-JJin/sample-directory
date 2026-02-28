@@ -539,11 +539,18 @@
     <!-- MediaPipe Hands for webcam hand-gesture tracking -->
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
 
-    <!-- Gesture UI elements (injected into DOM by hand-gesture.js) -->
+    <!-- Gesture UI elements -->
     <canvas id="hand-canvas"></canvas>
     <video id="gesture-video" playsinline muted></video>
     <button id="gesture-toggle"><span class="gesture-icon">✋</span> 손 제스처</button>
     <div id="gesture-status"></div>
+
+    <!-- Virtual scroll zones (left edge, visible when gesture mode ON) -->
+    <div id="gesture-scroll-up" class="gesture-scroll-zone">▲<span class="zone-label">스크롤 위</span></div>
+    <div id="gesture-scroll-down" class="gesture-scroll-zone">▼<span class="zone-label">스크롤 아래</span></div>
+
+    <!-- Swipe direction feedback flash -->
+    <div id="gesture-swipe-hint"></div>
 
     <script src="script.js"></script>
 </body>

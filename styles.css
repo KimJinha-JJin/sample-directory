@@ -1151,6 +1151,65 @@ ul {
     display: none;
 }
 
+/* Virtual scroll zone buttons (▲ / ▼) */
+.gesture-scroll-zone {
+    position: fixed;
+    left: 20px;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(10, 10, 26, 0.85);
+    border: 2px solid rgba(225, 6, 0, 0.45);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.5rem;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    z-index: 9150;
+    pointer-events: none;
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, color 0.2s;
+    user-select: none;
+    box-shadow: 0 2px 12px rgba(225, 6, 0, 0.25);
+}
+
+.gesture-scroll-zone .zone-label {
+    font-size: 0.42rem;
+    letter-spacing: 0.3px;
+    opacity: 0.55;
+    line-height: 1;
+}
+
+#gesture-scroll-up   { top: calc(50% - 80px); }
+#gesture-scroll-down { top: calc(50% + 12px); }
+
+.gesture-scroll-zone.hovered {
+    background: rgba(225, 6, 0, 0.28);
+    border-color: var(--rb-yellow);
+    color: var(--rb-yellow);
+    box-shadow: 0 0 22px rgba(255, 215, 0, 0.55), inset 0 0 14px rgba(255,215,0,0.08);
+}
+
+/* Swipe feedback flash */
+#gesture-swipe-hint {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    line-height: 1;
+    color: rgba(255, 215, 0, 0.92);
+    pointer-events: none;
+    z-index: 9400;
+    opacity: 0;
+    transition: opacity 0.12s ease;
+    text-shadow: 0 0 40px rgba(255, 215, 0, 0.85);
+    display: none;
+}
+
+#gesture-swipe-hint.visible { opacity: 1; }
+
 /* Word state: being grabbed by hand */
 .wc-grabbed {
     position: fixed !important;

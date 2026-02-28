@@ -300,10 +300,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Scroll zone
     const SCROLL_PX_PER_FRAME = 10;
 
-    // Swipe gesture
-    const SWIPE_HISTORY_LEN = 10;   // frames to track
-    const SWIPE_PX_MIN      = 55;   // min palm travel (px) to fire a swipe
-    const SWIPE_COOLDOWN_MS = 700;  // min ms between swipes
+    // Finger-gesture scroll
+    const GESTURE_HOLD_FRAMES = 6;    // consecutive frames gesture must be held
+    const GESTURE_COOLDOWN_MS = 800;  // min ms between gesture triggers
 
     // --- State ---
     let gestureActive   = false;
@@ -320,10 +319,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let scrollRafId  = null;
     let scrollDir    = 0;   // -1 up, 0 stopped, 1 down
 
-    // Swipe detection state
-    const palmHistory = [];
-    let lastSwipeMs   = 0;
-    let swipeHintTimer = null;
+    // Finger-gesture detection state
+    let gestureHoldCount = 0;
+    let lastGestureMs    = 0;
+    let currentGesture   = null;   // 'one' | 'v' | null
+    let gestureHintTimer = null;
 
     // --- Continuous scroll helpers ---
     function startContinuousScroll(dir) {
@@ -364,35 +364,58 @@ document.addEventListener('DOMContentLoaded', () => {
         else             stopContinuousScroll();
     }
 
-    // --- Swipe gesture helpers ---
-    function updatePalmHistory(wristScreenY) {
-        palmHistory.push(wristScreenY);
-        if (palmHistory.length > SWIPE_HISTORY_LEN) palmHistory.shift();
+    // --- Finger-gesture scroll helpers ---
+    function isExtended(tip, pip) {
+        // Normalised coords: Y increases downward → tip above pip means extended
+        return tip.y < pip.y;
     }
 
-    function detectSwipe(pinching) {
-        if (pinching || grabbedWord) return;
-        if (palmHistory.length < SWIPE_HISTORY_LEN) return;
+    function classifyGesture(lm) {
+        const indexUp  = isExtended(lm[8],  lm[6]);   // index tip vs index PIP
+        const middleUp = isExtended(lm[12], lm[10]);  // middle tip vs middle PIP
+        const ringUp   = isExtended(lm[16], lm[14]);  // ring tip vs ring PIP
+        const pinkyUp  = isExtended(lm[20], lm[18]);  // pinky tip vs pinky PIP
 
-        const now = performance.now();
-        if (now - lastSwipeMs < SWIPE_COOLDOWN_MS) return;
-
-        const delta = palmHistory[palmHistory.length - 1] - palmHistory[0];
-        if (Math.abs(delta) < SWIPE_PX_MIN) return;
-
-        // Hand moved down → scroll down, hand moved up → scroll up
-        const dir = delta > 0 ? 1 : -1;
-        window.scrollBy({ top: dir * window.innerHeight * 0.55, behavior: 'smooth' });
-        lastSwipeMs = now;
-        palmHistory.length = 0;
-        flashSwipeHint(dir > 0 ? '↓' : '↑');
+        if (indexUp && !middleUp && !ringUp && !pinkyUp) return 'one'; // ☝️ 위 스크롤
+        if (indexUp &&  middleUp && !ringUp && !pinkyUp) return 'v';   // ✌️ 아래 스크롤
+        return null;
     }
 
-    function flashSwipeHint(symbol) {
+    function detectFingerGesture(lm, pinching) {
+        if (pinching || grabbedWord) {
+            gestureHoldCount = 0;
+            currentGesture   = null;
+            return;
+        }
+
+        const now       = performance.now();
+        const candidate = classifyGesture(lm);
+
+        if (candidate && candidate === currentGesture) {
+            gestureHoldCount++;
+        } else {
+            currentGesture   = candidate;
+            gestureHoldCount = candidate ? 1 : 0;
+        }
+
+        if (
+            gestureHoldCount >= GESTURE_HOLD_FRAMES &&
+            now - lastGestureMs >= GESTURE_COOLDOWN_MS &&
+            currentGesture
+        ) {
+            const dir = currentGesture === 'one' ? -1 : 1;
+            window.scrollBy({ top: dir * window.innerHeight * 0.55, behavior: 'smooth' });
+            lastGestureMs    = now;
+            gestureHoldCount = 0;
+            flashGestureHint(currentGesture === 'one' ? '☝️' : '✌️');
+        }
+    }
+
+    function flashGestureHint(symbol) {
         swipeHintEl.textContent = symbol;
         swipeHintEl.classList.add('visible');
-        clearTimeout(swipeHintTimer);
-        swipeHintTimer = setTimeout(() => swipeHintEl.classList.remove('visible'), 480);
+        clearTimeout(gestureHintTimer);
+        gestureHintTimer = setTimeout(() => swipeHintEl.classList.remove('visible'), 600);
     }
 
     // --- Physics loop (always running, acts only on flying words) ---
@@ -594,12 +617,12 @@ document.addEventListener('DOMContentLoaded', () => {
             releaseWord();
         }
 
-        // --- Scroll zone: track index finger tip position ---
+        // --- Finger-gesture scroll: ☝️(1자)=위 · ✌️(브이)=아래 ---
+        detectFingerGesture(lm, pinchNow);
+
+        // Draw index finger cursor when not pinching
         const indexSX = (1 - index.x) * window.innerWidth;
         const indexSY = index.y       * window.innerHeight;
-        checkScrollZones(indexSX, indexSY, pinchNow);
-
-        // Draw index finger cursor when not pinching (helps aim at zones)
         if (!pinchNow) {
             hCtx.beginPath();
             hCtx.arc(indexSX, indexSY, 14, 0, Math.PI * 2);
@@ -607,11 +630,6 @@ document.addEventListener('DOMContentLoaded', () => {
             hCtx.lineWidth = 1.5;
             hCtx.stroke();
         }
-
-        // --- Swipe gesture: track wrist Y for up/down flick ---
-        const wristSY = lm[0].y * window.innerHeight;
-        updatePalmHistory(wristSY);
-        detectSwipe(pinchNow);
     }
 
     // --- Draw hand skeleton on canvas ---
@@ -662,6 +680,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- [Bug1] 공유 프레임 루프 ---
+    async function processFrame() {
+        if (!gestureActive) return;
+        if (!processingFrame) {
+            processingFrame = true;
+            try { await handsInstance.send({ image: video }); } catch (_) {}
+            processingFrame = false;
+        }
+        requestAnimationFrame(processFrame);
+    }
+
+    function startFrameLoop() {
+        requestAnimationFrame(processFrame);
+    }
+
+    // --- [Bug2] 스트림 정지 / 재시작 ---
+    function stopStream() {
+        if (video.srcObject) {
+            video.srcObject.getTracks().forEach(t => t.stop());
+            video.srcObject = null;
+        }
+    }
+
+    async function restartStream() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: { width: 640, height: 480, facingMode: 'user' }
+            });
+            video.srcObject = stream;
+            await video.play();
+        } catch (err) {
+            setStatus('❌ 웹캠 접근 실패');
+            gestureActive = false;
+            toggleBtn.classList.remove('active');
+            return;
+        }
+        setStatus('✋ 핀치=별명잡기 · ☝️=위스크롤 · ✌️=아래스크롤');
+        startFrameLoop();
+    }
+
     // --- Initialise MediaPipe Hands + getUserMedia ---
     async function initHandTracking() {
         setStatus('웹캠 권한 요청 중…');
@@ -701,19 +759,8 @@ document.addEventListener('DOMContentLoaded', () => {
         try { await handsInstance.send({ image: video }); } catch (_) {}
 
         mediapipeReady = true;
-        setStatus('✋ 핀치=별명잡기 · 손 흔들기=스크롤');
-
-        // Frame processing loop
-        async function processFrame() {
-            if (!gestureActive) return;
-            if (!processingFrame) {
-                processingFrame = true;
-                try { await handsInstance.send({ image: video }); } catch (_) {}
-                processingFrame = false;
-            }
-            requestAnimationFrame(processFrame);
-        }
-        requestAnimationFrame(processFrame);
+        setStatus('✋ 핀치=별명잡기 · ☝️=위스크롤 · ✌️=아래스크롤');
+        startFrameLoop();
     }
 
     // --- Status text helper ---
@@ -728,41 +775,32 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gestureActive) {
             toggleBtn.classList.add('active');
             toggleBtn.innerHTML = '<span class="gesture-icon">✋</span> 손 제스처 ON';
-            handCanvas.style.display      = 'block';
-            video.style.display           = 'block';
-            statusEl.style.display        = 'block';
-            scrollUpZone.style.display    = 'flex';
-            scrollDownZone.style.display  = 'flex';
-            swipeHintEl.style.display     = 'block';
+            handCanvas.style.display = 'block';
+            video.style.display      = 'block';
+            statusEl.style.display   = 'block';
+            swipeHintEl.style.display = 'block';
 
             if (!mediapipeReady) {
                 await initHandTracking();
             } else {
-                setStatus('✋ 핀치=별명잡기 · 손 흔들기=스크롤');
-                async function processFrame() {
-                    if (!gestureActive) return;
-                    if (!processingFrame) {
-                        processingFrame = true;
-                        try { await handsInstance.send({ image: video }); } catch (_) {}
-                        processingFrame = false;
-                    }
-                    requestAnimationFrame(processFrame);
-                }
-                requestAnimationFrame(processFrame);
+                // MediaPipe 이미 초기화됨 — 스트림만 재시작
+                await restartStream();
             }
         } else {
             toggleBtn.classList.remove('active');
             toggleBtn.innerHTML = '<span class="gesture-icon">✋</span> 손 제스처';
-            handCanvas.style.display      = 'none';
-            video.style.display           = 'none';
-            statusEl.style.display        = 'none';
-            scrollUpZone.style.display    = 'none';
-            scrollDownZone.style.display  = 'none';
-            swipeHintEl.style.display     = 'none';
+            handCanvas.style.display  = 'none';
+            video.style.display       = 'none';
+            statusEl.style.display    = 'none';
+            swipeHintEl.style.display = 'none';
 
             hCtx.clearRect(0, 0, handCanvas.width, handCanvas.height);
-            stopContinuousScroll();
-            palmHistory.length = 0;
+            stopStream();   // 웹캠 LED 끄기
+
+            // 제스처 상태 초기화
+            gestureHoldCount = 0;
+            currentGesture   = null;
+
             if (isPinching) { isPinching = false; releaseWord(); }
         }
     });

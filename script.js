@@ -620,9 +620,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- Finger-gesture scroll: ☝️(1자)=위 · ✌️(브이)=아래 ---
         detectFingerGesture(lm, pinchNow);
 
-        // Draw index finger cursor when not pinching
+        // Draw index finger cursor + scroll zone detection
         const indexSX = (1 - index.x) * window.innerWidth;
         const indexSY = index.y       * window.innerHeight;
+        checkScrollZones(indexSX, indexSY, pinchNow);
         if (!pinchNow) {
             hCtx.beginPath();
             hCtx.arc(indexSX, indexSY, 14, 0, Math.PI * 2);
@@ -775,10 +776,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gestureActive) {
             toggleBtn.classList.add('active');
             toggleBtn.innerHTML = '<span class="gesture-icon">✋</span> 손 제스처 ON';
-            handCanvas.style.display = 'block';
-            video.style.display      = 'block';
-            statusEl.style.display   = 'block';
-            swipeHintEl.style.display = 'block';
+            handCanvas.style.display      = 'block';
+            video.style.display           = 'block';
+            statusEl.style.display        = 'block';
+            scrollUpZone.style.display    = 'flex';
+            scrollDownZone.style.display  = 'flex';
+            swipeHintEl.style.display     = 'block';
 
             if (!mediapipeReady) {
                 await initHandTracking();
@@ -789,12 +792,15 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             toggleBtn.classList.remove('active');
             toggleBtn.innerHTML = '<span class="gesture-icon">✋</span> 손 제스처';
-            handCanvas.style.display  = 'none';
-            video.style.display       = 'none';
-            statusEl.style.display    = 'none';
-            swipeHintEl.style.display = 'none';
+            handCanvas.style.display      = 'none';
+            video.style.display           = 'none';
+            statusEl.style.display        = 'none';
+            scrollUpZone.style.display    = 'none';
+            scrollDownZone.style.display  = 'none';
+            swipeHintEl.style.display     = 'none';
 
             hCtx.clearRect(0, 0, handCanvas.width, handCanvas.height);
+            stopContinuousScroll();
             stopStream();   // 웹캠 LED 끄기
 
             // 제스처 상태 초기화

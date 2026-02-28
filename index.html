@@ -309,20 +309,20 @@
             <h2 class="section-title">시즌별 성적</h2>
             <p class="chart-subtitle">막스 베르스타펜의 F1 커리어 시즌별 상세 기록</p>
 
-            <!-- Bar Chart: Wins per season -->
-            <div class="bar-chart-wrapper">
+            <!-- Vertical Bar Chart: Wins per season -->
+            <div class="bar-chart-wrapper reveal">
                 <div class="bar-chart-title">시즌별 우승 횟수 <span>(최다: 19승 · 2023)</span></div>
-                <div class="bar-chart" id="barChart">
-                    <div class="bar-row"><span class="bar-year">2015</span><div class="bar-track"><div class="bar-fill" style="--bar-w: 0%"></div></div><span class="bar-val">0</span></div>
-                    <div class="bar-row"><span class="bar-year">2016</span><div class="bar-track"><div class="bar-fill" style="--bar-w: 5.3%"></div></div><span class="bar-val">1</span></div>
-                    <div class="bar-row"><span class="bar-year">2017</span><div class="bar-track"><div class="bar-fill" style="--bar-w: 10.5%"></div></div><span class="bar-val">2</span></div>
-                    <div class="bar-row"><span class="bar-year">2018</span><div class="bar-track"><div class="bar-fill" style="--bar-w: 10.5%"></div></div><span class="bar-val">2</span></div>
-                    <div class="bar-row"><span class="bar-year">2019</span><div class="bar-track"><div class="bar-fill" style="--bar-w: 15.8%"></div></div><span class="bar-val">3</span></div>
-                    <div class="bar-row"><span class="bar-year">2020</span><div class="bar-track"><div class="bar-fill" style="--bar-w: 10.5%"></div></div><span class="bar-val">2</span></div>
-                    <div class="bar-row champion"><span class="bar-year">2021 ⭐</span><div class="bar-track"><div class="bar-fill champion" style="--bar-w: 52.6%"></div></div><span class="bar-val">10</span></div>
-                    <div class="bar-row champion"><span class="bar-year">2022 ⭐</span><div class="bar-track"><div class="bar-fill champion" style="--bar-w: 78.9%"></div></div><span class="bar-val">15</span></div>
-                    <div class="bar-row champion"><span class="bar-year">2023 ⭐</span><div class="bar-track"><div class="bar-fill champion" style="--bar-w: 100%"></div></div><span class="bar-val">19</span></div>
-                    <div class="bar-row champion"><span class="bar-year">2024 ⭐</span><div class="bar-track"><div class="bar-fill champion" style="--bar-w: 42.1%"></div></div><span class="bar-val">8</span></div>
+                <div class="vbar-chart" id="barChart">
+                    <div class="vbar-col"><span class="vbar-count">0</span><div class="vbar-bar-wrap"><div class="vbar-fill" style="--bar-h: 0%"></div></div><span class="vbar-year">2015</span></div>
+                    <div class="vbar-col"><span class="vbar-count">1</span><div class="vbar-bar-wrap"><div class="vbar-fill" style="--bar-h: 5.3%"></div></div><span class="vbar-year">2016</span></div>
+                    <div class="vbar-col"><span class="vbar-count">2</span><div class="vbar-bar-wrap"><div class="vbar-fill" style="--bar-h: 10.5%"></div></div><span class="vbar-year">2017</span></div>
+                    <div class="vbar-col"><span class="vbar-count">2</span><div class="vbar-bar-wrap"><div class="vbar-fill" style="--bar-h: 10.5%"></div></div><span class="vbar-year">2018</span></div>
+                    <div class="vbar-col"><span class="vbar-count">3</span><div class="vbar-bar-wrap"><div class="vbar-fill" style="--bar-h: 15.8%"></div></div><span class="vbar-year">2019</span></div>
+                    <div class="vbar-col"><span class="vbar-count">2</span><div class="vbar-bar-wrap"><div class="vbar-fill" style="--bar-h: 10.5%"></div></div><span class="vbar-year">2020</span></div>
+                    <div class="vbar-col champion"><span class="vbar-count">10</span><div class="vbar-bar-wrap"><div class="vbar-fill champion" style="--bar-h: 52.6%"></div></div><span class="vbar-year">2021 ⭐</span></div>
+                    <div class="vbar-col champion"><span class="vbar-count">15</span><div class="vbar-bar-wrap"><div class="vbar-fill champion" style="--bar-h: 78.9%"></div></div><span class="vbar-year">2022 ⭐</span></div>
+                    <div class="vbar-col champion"><span class="vbar-count">19</span><div class="vbar-bar-wrap"><div class="vbar-fill champion" style="--bar-h: 100%"></div></div><span class="vbar-year">2023 ⭐</span></div>
+                    <div class="vbar-col champion"><span class="vbar-count">8</span><div class="vbar-bar-wrap"><div class="vbar-fill champion" style="--bar-h: 42.1%"></div></div><span class="vbar-year">2024 ⭐</span></div>
                 </div>
             </div>
 
@@ -341,16 +341,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>2015</td><td>Toro Rosso</td><td>0</td><td>0</td><td>0</td><td>49</td><td>12위</td></tr>
-                        <tr><td>2016</td><td>Red Bull</td><td>1</td><td>7</td><td>0</td><td>204</td><td>5위</td></tr>
-                        <tr><td>2017</td><td>Red Bull</td><td>2</td><td>8</td><td>0</td><td>168</td><td>6위</td></tr>
-                        <tr><td>2018</td><td>Red Bull</td><td>2</td><td>11</td><td>0</td><td>249</td><td>4위</td></tr>
-                        <tr><td>2019</td><td>Red Bull</td><td>3</td><td>9</td><td>2</td><td>278</td><td>3위</td></tr>
-                        <tr><td>2020</td><td>Red Bull</td><td>2</td><td>11</td><td>0</td><td>214</td><td>3위</td></tr>
-                        <tr class="champion-row"><td>2021 ⭐</td><td>Red Bull</td><td>10</td><td>18</td><td>10</td><td>395.5</td><td><strong>🏆 챔피언</strong></td></tr>
-                        <tr class="champion-row"><td>2022 ⭐</td><td>Red Bull</td><td>15</td><td>17</td><td>14</td><td>454</td><td><strong>🏆 챔피언</strong></td></tr>
-                        <tr class="champion-row"><td>2023 ⭐</td><td>Red Bull</td><td>19</td><td>21</td><td>9</td><td>575</td><td><strong>🏆 챔피언</strong></td></tr>
-                        <tr class="champion-row"><td>2024 ⭐</td><td>Red Bull</td><td>8</td><td>14</td><td>2</td><td>437</td><td><strong>🏆 챔피언</strong></td></tr>
+                        <tr class="reveal"><td>2015</td><td>Toro Rosso</td><td>0</td><td>0</td><td>0</td><td>49</td><td>12위</td></tr>
+                        <tr class="reveal"><td>2016</td><td>Red Bull</td><td>1</td><td>7</td><td>0</td><td>204</td><td>5위</td></tr>
+                        <tr class="reveal"><td>2017</td><td>Red Bull</td><td>2</td><td>8</td><td>0</td><td>168</td><td>6위</td></tr>
+                        <tr class="reveal"><td>2018</td><td>Red Bull</td><td>2</td><td>11</td><td>0</td><td>249</td><td>4위</td></tr>
+                        <tr class="reveal"><td>2019</td><td>Red Bull</td><td>3</td><td>9</td><td>2</td><td>278</td><td>3위</td></tr>
+                        <tr class="reveal"><td>2020</td><td>Red Bull</td><td>2</td><td>11</td><td>0</td><td>214</td><td>3위</td></tr>
+                        <tr class="champion-row reveal"><td>2021 ⭐</td><td>Red Bull</td><td>10</td><td>18</td><td>10</td><td>395.5</td><td><strong>🏆 챔피언</strong></td></tr>
+                        <tr class="champion-row reveal"><td>2022 ⭐</td><td>Red Bull</td><td>15</td><td>17</td><td>14</td><td>454</td><td><strong>🏆 챔피언</strong></td></tr>
+                        <tr class="champion-row reveal"><td>2023 ⭐</td><td>Red Bull</td><td>19</td><td>21</td><td>9</td><td>575</td><td><strong>🏆 챔피언</strong></td></tr>
+                        <tr class="champion-row reveal"><td>2024 ⭐</td><td>Red Bull</td><td>8</td><td>14</td><td>2</td><td>437</td><td><strong>🏆 챔피언</strong></td></tr>
                     </tbody>
                 </table>
             </div>

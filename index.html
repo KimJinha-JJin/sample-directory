@@ -343,7 +343,7 @@
                     style="--wc-size:0.95rem;--wc-rotate:3.5deg;--wc-color:rgba(255,255,255,0.4);--float-dur:2.9s;--float-delay:0.6s;--float-y:-6px;--float-tilt:-1.5deg"
                     data-origin="팀 라디오 명언에서 비롯된 팬 별명">Simply Lovely</span>
             </div>
-            <p class="wc-hint">※ 별명 위에 마우스를 올리면 유래를 확인할 수 있어요</p>
+            <p class="wc-hint">※ 별명 위에 마우스를 올리면 유래를 확인 · 하단 ✋ 버튼으로 손 제스처 활성화 후 엄지+검지로 집어 던지기!</p>
         </div>
     </section>
 
@@ -535,6 +535,15 @@
             </div>
         </div>
     </footer>
+
+    <!-- MediaPipe Hands for webcam hand-gesture tracking -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+    <!-- Gesture UI elements (injected into DOM by hand-gesture.js) -->
+    <canvas id="hand-canvas"></canvas>
+    <video id="gesture-video" playsinline muted></video>
+    <button id="gesture-toggle"><span class="gesture-icon">✋</span> 손 제스처</button>
+    <div id="gesture-status"></div>
 
     <script src="script.js"></script>
 </body>

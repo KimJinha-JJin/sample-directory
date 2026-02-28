@@ -259,3 +259,397 @@ document.addEventListener('DOMContentLoaded', () => {
     checkTimelineVisibility();
     updateActiveNav();
 });
+
+// ===== Hand Gesture Nickname Interaction =====
+(function () {
+    'use strict';
+
+    // --- DOM references (elements already in HTML) ---
+    const handCanvas  = document.getElementById('hand-canvas');
+    const video       = document.getElementById('gesture-video');
+    const toggleBtn   = document.getElementById('gesture-toggle');
+    const statusEl    = document.getElementById('gesture-status');
+
+    if (!handCanvas || !video || !toggleBtn) return;
+
+    const hCtx = handCanvas.getContext('2d');
+
+    // Resize canvas to cover full viewport
+    function resizeCanvas() {
+        handCanvas.width  = window.innerWidth;
+        handCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // --- Per-word physics state ---
+    const words = Array.from(document.querySelectorAll('.wc-word'));
+    const physics = new Map();
+    words.forEach(w => physics.set(w, { x: 0, y: 0, vx: 0, vy: 0, flying: false, grabbed: false }));
+
+    // --- Constants ---
+    const GRAVITY        = 0.38;   // px per frame²  (approx 60 fps)
+    const AIR_FRICTION   = 0.985;
+    const FLOOR_FRICTION = 0.78;
+    const BOUNCE         = 0.52;
+    const PINCH_THRESHOLD = 0.065; // normalised distance between thumb & index
+
+    // --- State ---
+    let gestureActive  = false;
+    let mediapipeReady = false;
+    let handsInstance  = null;
+    let grabbing       = false;   // pinch is closed
+    let grabbedWord    = null;
+    let pinchVelX      = 0;
+    let pinchVelY      = 0;
+    let prevPinchX     = 0;
+    let prevPinchY     = 0;
+    let processingFrame = false;
+
+    // --- Physics loop (always running, acts only on flying words) ---
+    function physicsLoop() {
+        hCtx.clearRect(0, 0, handCanvas.width, handCanvas.height);
+
+        words.forEach(word => {
+            const s = physics.get(word);
+            if (!s.flying) return;
+
+            s.vx *= AIR_FRICTION;
+            s.vy  = s.vy * AIR_FRICTION + GRAVITY;
+            s.x  += s.vx;
+            s.y  += s.vy;
+
+            const w = word.offsetWidth;
+            const h = word.offsetHeight;
+
+            // Wall bounces
+            if (s.x < 0)                       { s.x = 0;                        s.vx =  Math.abs(s.vx) * BOUNCE; }
+            if (s.x + w > window.innerWidth)    { s.x = window.innerWidth - w;   s.vx = -Math.abs(s.vx) * BOUNCE; }
+            if (s.y < 0)                        { s.y = 0;                        s.vy =  Math.abs(s.vy) * BOUNCE; }
+            if (s.y + h > window.innerHeight)   {
+                s.y  = window.innerHeight - h;
+                s.vy = -Math.abs(s.vy) * BOUNCE;
+                s.vx *= FLOOR_FRICTION;
+
+                // Come to rest
+                if (Math.abs(s.vy) < 1.2) {
+                    s.vy = 0;
+                    if (Math.abs(s.vx) < 0.4) {
+                        s.vx = 0;
+                        s.flying = false;
+                        setTimeout(() => restoreWord(word), 2500);
+                        return;
+                    }
+                }
+            }
+
+            word.style.left = s.x + 'px';
+            word.style.top  = s.y + 'px';
+        });
+
+        requestAnimationFrame(physicsLoop);
+    }
+    requestAnimationFrame(physicsLoop);
+
+    // --- Restore word to original layout position ---
+    function restoreWord(word) {
+        const s = physics.get(word);
+        if (s.grabbed) return; // grabbed again before restore
+
+        word.classList.remove('wc-grabbed', 'wc-flying');
+        // Restore original inline style (CSS custom properties)
+        const orig = word.dataset.origStyle;
+        if (orig !== undefined) {
+            word.setAttribute('style', orig);
+        }
+        s.flying  = false;
+        s.grabbed = false;
+    }
+
+    // --- Grab a word at screen position (x, y) ---
+    function grabWord(word, x, y) {
+        const s = physics.get(word);
+
+        // Save original inline style once
+        if (word.dataset.origStyle === undefined) {
+            word.dataset.origStyle = word.getAttribute('style') || '';
+        }
+
+        const rect = word.getBoundingClientRect();
+        word.dataset.grabOffsetX = x - rect.left;
+        word.dataset.grabOffsetY = y - rect.top;
+
+        s.x       = rect.left;
+        s.y       = rect.top;
+        s.vx      = 0;
+        s.vy      = 0;
+        s.grabbed = true;
+        s.flying  = false;
+
+        word.classList.add('wc-grabbed');
+        word.classList.remove('wc-flying');
+
+        // Override inline style for grabbed state
+        word.style.cssText =
+            word.dataset.origStyle +
+            ';position:fixed;left:' + s.x + 'px;top:' + s.y + 'px' +
+            ';animation:none;transform:scale(1.28) rotate(0deg);z-index:9500;transition:none';
+
+        grabbedWord = word;
+        prevPinchX  = x;
+        prevPinchY  = y;
+        pinchVelX   = 0;
+        pinchVelY   = 0;
+    }
+
+    // --- Move grabbed word to (x, y) ---
+    function moveGrabbedWord(x, y) {
+        if (!grabbedWord) return;
+        const s    = physics.get(grabbedWord);
+        const offX = parseFloat(grabbedWord.dataset.grabOffsetX) || 0;
+        const offY = parseFloat(grabbedWord.dataset.grabOffsetY) || 0;
+
+        pinchVelX = x - prevPinchX;
+        pinchVelY = y - prevPinchY;
+        prevPinchX = x;
+        prevPinchY = y;
+
+        s.x = x - offX;
+        s.y = y - offY;
+        grabbedWord.style.left = s.x + 'px';
+        grabbedWord.style.top  = s.y + 'px';
+    }
+
+    // --- Release word — apply throw velocity ---
+    function releaseWord() {
+        if (!grabbedWord) return;
+        const word = grabbedWord;
+        const s    = physics.get(word);
+
+        s.vx      = pinchVelX * 1.6;
+        s.vy      = pinchVelY * 1.6;
+        s.grabbed = false;
+        s.flying  = true;
+
+        word.classList.remove('wc-grabbed');
+        word.classList.add('wc-flying');
+
+        // Apply a small random spin via inline style
+        const spin = (Math.random() - 0.5) * 28;
+        word.style.cssText =
+            word.dataset.origStyle +
+            ';position:fixed;left:' + s.x + 'px;top:' + s.y + 'px' +
+            ';animation:none;transform:rotate(' + spin + 'deg);z-index:8990;transition:none;pointer-events:none';
+
+        grabbedWord = null;
+        pinchVelX   = 0;
+        pinchVelY   = 0;
+    }
+
+    // --- Find word element at viewport position ---
+    function wordAtPoint(x, y) {
+        for (const word of words) {
+            const r = word.getBoundingClientRect();
+            if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return word;
+        }
+        return null;
+    }
+
+    // --- MediaPipe results callback ---
+    let isPinching = false;
+
+    function onHandResults(results) {
+        if (!gestureActive) return;
+
+        hCtx.clearRect(0, 0, handCanvas.width, handCanvas.height);
+
+        if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
+            if (isPinching) { isPinching = false; releaseWord(); }
+            return;
+        }
+
+        const lm    = results.multiHandLandmarks[0];
+        const thumb = lm[4];   // thumb tip
+        const index = lm[8];   // index finger tip
+
+        // Draw skeleton
+        drawHandSkeleton(lm);
+
+        // Pinch distance (normalised)
+        const dist        = Math.hypot(thumb.x - index.x, thumb.y - index.y);
+        const pinchNow    = dist < PINCH_THRESHOLD;
+
+        // Map to mirrored screen coords (x flipped for selfie-mirror feel)
+        const midNX = (thumb.x + index.x) / 2;
+        const midNY = (thumb.y + index.y) / 2;
+        const sx    = (1 - midNX) * window.innerWidth;
+        const sy    = midNY       * window.innerHeight;
+
+        drawPinchIndicator(sx, sy, pinchNow, dist);
+
+        if (pinchNow && !isPinching) {
+            // Pinch start
+            isPinching = true;
+            const target = wordAtPoint(sx, sy);
+            if (target) grabWord(target, sx, sy);
+            prevPinchX = sx;
+            prevPinchY = sy;
+
+        } else if (pinchNow && isPinching) {
+            // Pinch held — drag
+            if (grabbedWord) moveGrabbedWord(sx, sy);
+
+        } else if (!pinchNow && isPinching) {
+            // Pinch released — throw
+            isPinching = false;
+            releaseWord();
+        }
+    }
+
+    // --- Draw hand skeleton on canvas ---
+    const CONNECTIONS = [
+        [0,1],[1,2],[2,3],[3,4],
+        [0,5],[5,6],[6,7],[7,8],
+        [0,9],[9,10],[10,11],[11,12],
+        [0,13],[13,14],[14,15],[15,16],
+        [0,17],[17,18],[18,19],[19,20],
+        [5,9],[9,13],[13,17]
+    ];
+
+    function drawHandSkeleton(lm) {
+        const W = handCanvas.width;
+        const H = handCanvas.height;
+
+        hCtx.strokeStyle = 'rgba(225, 6, 0, 0.55)';
+        hCtx.lineWidth   = 2;
+        CONNECTIONS.forEach(([a, b]) => {
+            hCtx.beginPath();
+            hCtx.moveTo((1 - lm[a].x) * W, lm[a].y * H);
+            hCtx.lineTo((1 - lm[b].x) * W, lm[b].y * H);
+            hCtx.stroke();
+        });
+
+        lm.forEach((pt, i) => {
+            const x  = (1 - pt.x) * W;
+            const y  = pt.y * H;
+            const big = i === 4 || i === 8;
+            hCtx.beginPath();
+            hCtx.arc(x, y, big ? 8 : 4, 0, Math.PI * 2);
+            hCtx.fillStyle = big ? '#ffd700' : 'rgba(255,255,255,0.7)';
+            hCtx.fill();
+        });
+    }
+
+    // --- Draw pinch indicator circle ---
+    function drawPinchIndicator(x, y, active, dist) {
+        const r = Math.max(12, dist * 280);
+        hCtx.beginPath();
+        hCtx.arc(x, y, r, 0, Math.PI * 2);
+        hCtx.strokeStyle = active ? '#ffd700' : 'rgba(225,6,0,0.75)';
+        hCtx.lineWidth   = active ? 3 : 2;
+        hCtx.stroke();
+        if (active) {
+            hCtx.fillStyle = 'rgba(255,215,0,0.18)';
+            hCtx.fill();
+        }
+    }
+
+    // --- Initialise MediaPipe Hands + getUserMedia ---
+    async function initHandTracking() {
+        setStatus('웹캠 권한 요청 중…');
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: { width: 640, height: 480, facingMode: 'user' }
+            });
+            video.srcObject = stream;
+            await video.play();
+        } catch (err) {
+            setStatus('❌ 웹캠 접근 실패');
+            toggleBtn.textContent = '❌ 웹캠 오류';
+            gestureActive = false;
+            toggleBtn.classList.remove('active');
+            return;
+        }
+
+        if (typeof Hands === 'undefined') {
+            setStatus('❌ MediaPipe 로드 실패');
+            return;
+        }
+
+        setStatus('모델 로딩 중…');
+        handsInstance = new Hands({
+            locateFile: file =>
+                'https://cdn.jsdelivr.net/npm/@mediapipe/hands/' + file
+        });
+        handsInstance.setOptions({
+            maxNumHands: 1,
+            modelComplexity: 1,
+            minDetectionConfidence: 0.7,
+            minTrackingConfidence: 0.5
+        });
+        handsInstance.onResults(onHandResults);
+
+        // Warm-up send to trigger model download
+        try { await handsInstance.send({ image: video }); } catch (_) {}
+
+        mediapipeReady = true;
+        setStatus('✋ 엄지+검지로 별명을 집어 던지세요!');
+
+        // Frame processing loop
+        async function processFrame() {
+            if (!gestureActive) return;
+            if (!processingFrame) {
+                processingFrame = true;
+                try { await handsInstance.send({ image: video }); } catch (_) {}
+                processingFrame = false;
+            }
+            requestAnimationFrame(processFrame);
+        }
+        requestAnimationFrame(processFrame);
+    }
+
+    // --- Status text helper ---
+    function setStatus(msg) {
+        statusEl.textContent = msg;
+    }
+
+    // --- Toggle button click ---
+    toggleBtn.addEventListener('click', async () => {
+        gestureActive = !gestureActive;
+
+        if (gestureActive) {
+            toggleBtn.classList.add('active');
+            toggleBtn.innerHTML = '<span class="gesture-icon">✋</span> 손 제스처 ON';
+            handCanvas.style.display = 'block';
+            video.style.display      = 'block';
+            statusEl.style.display   = 'block';
+
+            if (!mediapipeReady) {
+                await initHandTracking();
+            } else {
+                setStatus('✋ 엄지+검지로 별명을 집어 던지세요!');
+                // Restart frame loop
+                async function processFrame() {
+                    if (!gestureActive) return;
+                    if (!processingFrame) {
+                        processingFrame = true;
+                        try { await handsInstance.send({ image: video }); } catch (_) {}
+                        processingFrame = false;
+                    }
+                    requestAnimationFrame(processFrame);
+                }
+                requestAnimationFrame(processFrame);
+            }
+        } else {
+            toggleBtn.classList.remove('active');
+            toggleBtn.innerHTML = '<span class="gesture-icon">✋</span> 손 제스처';
+            handCanvas.style.display = 'none';
+            video.style.display      = 'none';
+            statusEl.style.display   = 'none';
+
+            hCtx.clearRect(0, 0, handCanvas.width, handCanvas.height);
+            if (isPinching) { isPinching = false; releaseWord(); }
+        }
+    });
+
+})();

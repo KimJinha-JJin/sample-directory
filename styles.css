@@ -1057,6 +1057,121 @@ ul {
     }
 }
 
+/* ===== Hand Gesture Nickname Interaction ===== */
+
+/* Full-screen transparent canvas for hand landmarks */
+#hand-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9000;
+    display: none;
+}
+
+/* Hidden webcam video element (processed in background) */
+#gesture-video {
+    position: fixed;
+    bottom: 90px;
+    right: 16px;
+    width: 160px;
+    height: 120px;
+    border-radius: 10px;
+    border: 2px solid var(--rb-red);
+    object-fit: cover;
+    transform: scaleX(-1); /* mirror */
+    z-index: 9100;
+    display: none;
+    box-shadow: 0 4px 20px rgba(225, 6, 0, 0.5);
+}
+
+/* Gesture toggle button */
+#gesture-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 16px;
+    background: rgba(10, 10, 26, 0.92);
+    border: 2px solid var(--rb-red);
+    color: var(--text-primary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 10px 16px;
+    border-radius: 50px;
+    cursor: none !important;
+    z-index: 9200;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+    box-shadow: 0 2px 14px rgba(225, 6, 0, 0.3);
+    user-select: none;
+}
+
+#gesture-toggle:hover {
+    background: rgba(225, 6, 0, 0.15);
+    box-shadow: 0 4px 20px rgba(225, 6, 0, 0.55);
+}
+
+#gesture-toggle.active {
+    background: rgba(225, 6, 0, 0.25);
+    border-color: var(--rb-yellow);
+    color: var(--rb-yellow);
+    box-shadow: 0 4px 24px rgba(255, 215, 0, 0.4);
+    animation: gesture-pulse 2s ease-in-out infinite;
+}
+
+#gesture-toggle .gesture-icon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+@keyframes gesture-pulse {
+    0%, 100% { box-shadow: 0 4px 24px rgba(255, 215, 0, 0.4); }
+    50%       { box-shadow: 0 4px 36px rgba(255, 215, 0, 0.75); }
+}
+
+/* Status hint shown under the toggle */
+#gesture-status {
+    position: fixed;
+    bottom: 72px;
+    right: 16px;
+    background: rgba(10, 10, 26, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.65rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    z-index: 9150;
+    pointer-events: none;
+    text-align: center;
+    max-width: 180px;
+    display: none;
+}
+
+/* Word state: being grabbed by hand */
+.wc-grabbed {
+    position: fixed !important;
+    animation: none !important;
+    z-index: 9500 !important;
+    cursor: grabbing !important;
+    filter: drop-shadow(0 0 24px currentColor) !important;
+    transition: none !important;
+    will-change: left, top;
+}
+
+/* Word state: thrown, flying with physics */
+.wc-flying {
+    position: fixed !important;
+    animation: none !important;
+    z-index: 8990 !important;
+    pointer-events: none;
+    transition: none !important;
+    will-change: left, top;
+}
+
 /* ===== Quotes Carousel Section ===== */
 .quotes-section {
     background: linear-gradient(135deg, rgba(10, 10, 26, 1) 0%, rgba(15, 5, 20, 1) 50%, rgba(10, 10, 26, 1) 100%);

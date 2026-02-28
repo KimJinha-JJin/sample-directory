@@ -652,9 +652,7 @@ ul {
 
 /* ===== Gallery Section ===== */
 .gallery-section {
-    background:
-        linear-gradient(rgba(10, 10, 26, 0.85), rgba(10, 10, 26, 0.9)),
-        url('gallery-bg.jpg') center/cover no-repeat fixed;
+    background: linear-gradient(135deg, rgba(10, 10, 26, 1) 0%, rgba(20, 10, 30, 1) 50%, rgba(10, 10, 26, 1) 100%);
 }
 
 .filter-buttons {
@@ -770,9 +768,7 @@ ul {
 
 /* ===== Quotes Section ===== */
 .quotes-section {
-    background:
-        linear-gradient(rgba(10, 10, 26, 0.85), rgba(10, 10, 26, 0.9)),
-        url('quotes-bg.jpg') center/cover no-repeat fixed;
+    background: linear-gradient(135deg, rgba(10, 10, 26, 1) 0%, rgba(20, 10, 30, 1) 50%, rgba(10, 10, 26, 1) 100%);
 }
 
 .quotes-container {

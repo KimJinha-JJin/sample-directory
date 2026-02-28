@@ -285,6 +285,7 @@ const mapLocations = [
 function initMap() {
     const mapEl = document.getElementById('verstappen-map');
     if (!mapEl || typeof L === 'undefined') return;
+    if (mapEl._leaflet_id) return; // 이중 초기화 방지
 
     const verstappenMap = L.map(mapEl, {
         scrollWheelZoom: false,
@@ -319,11 +320,20 @@ function initMap() {
 
     verstappenMap.fitBounds(bounds, { padding: [40, 40] });
 
-    // 컨테이너 크기가 확정된 후 타일 재렌더링
+    // 지도가 뷰포트에 진입할 때마다 타일 재렌더링 (스크롤 후 진입 시 빈 화면 방지)
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            verstappenMap.invalidateSize();
+            verstappenMap.fitBounds(bounds, { padding: [40, 40] });
+        }
+    }, { threshold: 0.1 });
+    observer.observe(mapEl);
+
+    // 초기 로드 시 fallback
     setTimeout(() => {
         verstappenMap.invalidateSize();
         verstappenMap.fitBounds(bounds, { padding: [40, 40] });
-    }, 300);
+    }, 500);
 }
 
 window.addEventListener('load', initMap);

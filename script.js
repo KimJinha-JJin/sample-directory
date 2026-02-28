@@ -6,7 +6,7 @@ customCursor.innerHTML = `
         <path d="M1,1 L1,21 L6,16 L10,25 L14,23 L10,14 L17,14 Z"
               fill="#e10600" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
     </svg>
-    <img class="cursor-car" src="F1.svg.png" alt="">`;
+    <img class="cursor-car" src="F1.svg.png" alt="F1 race car cursor">`;
 document.body.appendChild(customCursor);
 
 document.addEventListener('mousemove', (e) => {
@@ -41,18 +41,16 @@ function updateScrollProgress() {
     scrollProgress.style.width = scrollPercent + '%';
 }
 
-window.addEventListener('scroll', updateScrollProgress);
-
 // ===== Navigation Scroll Effect =====
 const navbar = document.getElementById('navbar');
 
-window.addEventListener('scroll', () => {
+function updateNavbarStyle() {
     if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
     }
-});
+}
 
 // ===== Mobile Navigation Toggle =====
 const navToggle = document.getElementById('navToggle');
@@ -92,7 +90,13 @@ function updateActiveNav() {
     });
 }
 
-window.addEventListener('scroll', updateActiveNav);
+// ===== Unified Scroll Handler =====
+window.addEventListener('scroll', () => {
+    updateScrollProgress();
+    updateNavbarStyle();
+    updateActiveNav();
+    checkTimelineVisibility();
+});
 
 // ===== Stat Counter Animation =====
 const statNumbers = document.querySelectorAll('.stat-number');
@@ -173,53 +177,6 @@ filterButtons.forEach(btn => {
             }
         });
     });
-});
-
-// ===== Quotes Slider =====
-const quotes = document.querySelectorAll('.quote-slide');
-const dotsContainer = document.getElementById('quoteDots');
-let currentQuote = 0;
-let quoteInterval;
-
-// Create dots
-quotes.forEach((_, index) => {
-    const dot = document.createElement('div');
-    dot.classList.add('quote-dot');
-    if (index === 0) dot.classList.add('active');
-    dot.addEventListener('click', () => goToQuote(index));
-    dotsContainer.appendChild(dot);
-});
-
-const dots = document.querySelectorAll('.quote-dot');
-
-function goToQuote(index) {
-    quotes[currentQuote].classList.remove('active');
-    dots[currentQuote].classList.remove('active');
-
-    currentQuote = index;
-
-    quotes[currentQuote].classList.add('active');
-    dots[currentQuote].classList.add('active');
-
-    resetQuoteInterval();
-}
-
-function nextQuote() {
-    const next = (currentQuote + 1) % quotes.length;
-    goToQuote(next);
-}
-
-function resetQuoteInterval() {
-    clearInterval(quoteInterval);
-    quoteInterval = setInterval(nextQuote, 4000);
-}
-
-// Start auto-sliding
-quoteInterval = setInterval(nextQuote, 4000);
-
-// ===== Scroll Event Listener =====
-window.addEventListener('scroll', () => {
-    checkTimelineVisibility();
 });
 
 // ===== Bar Chart Animation =====

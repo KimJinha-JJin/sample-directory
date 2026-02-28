@@ -176,6 +176,12 @@ ul {
     transition: var(--transition);
 }
 
+.nav-toggle:focus-visible {
+    outline: 2px solid var(--rb-yellow);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
 /* ===== Hero Section ===== */
 .hero {
     position: relative;
@@ -685,6 +691,11 @@ ul {
     box-shadow: 0 0 20px rgba(225, 6, 0, 0.3);
 }
 
+.filter-btn:focus-visible {
+    outline: 2px solid var(--rb-yellow);
+    outline-offset: 3px;
+}
+
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -803,31 +814,6 @@ ul {
     color: var(--rb-yellow);
     font-style: normal;
     font-weight: 600;
-}
-
-.quote-dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.8rem;
-    margin-top: 2rem;
-}
-
-.quote-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.2);
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.quote-dot.active {
-    background: var(--rb-red);
-    box-shadow: 0 0 12px rgba(225, 6, 0, 0.6);
-}
-
-.quote-dot:hover {
-    background: rgba(255, 255, 255, 0.4);
 }
 
 /* ===== Footer ===== */
@@ -1202,6 +1188,11 @@ ul {
     color: #fff;
 }
 
+.quote-arrow:focus-visible {
+    outline: 2px solid var(--rb-yellow);
+    outline-offset: 3px;
+}
+
 .quote-dots {
     display: flex;
     gap: 8px;
@@ -1221,6 +1212,11 @@ ul {
 .quote-dot.active {
     background: var(--rb-red);
     transform: scale(1.3);
+}
+
+.quote-dot:focus-visible {
+    outline: 2px solid var(--rb-yellow);
+    outline-offset: 3px;
 }
 
 @media (max-width: 768px) {

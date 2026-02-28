@@ -1133,6 +1133,36 @@ ul {
     50%       { box-shadow: 0 4px 36px rgba(255, 215, 0, 0.75); }
 }
 
+
+#gesture-scroll-zone {
+    position: fixed;
+    right: 16px;
+    bottom: 140px;
+    width: 128px;
+    height: 128px;
+    border-radius: 22px;
+    border: 2px dashed rgba(255, 215, 0, 0.6);
+    background: rgba(10, 10, 26, 0.45);
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 9140;
+    pointer-events: none;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+#gesture-scroll-zone.active {
+    background: rgba(225, 6, 0, 0.32);
+    border-color: var(--rb-red);
+    color: #fff;
+    box-shadow: 0 0 28px rgba(225, 6, 0, 0.52);
+}
+
 /* Status hint shown under the toggle */
 #gesture-status {
     position: fixed;

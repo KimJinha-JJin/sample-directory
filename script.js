@@ -247,6 +247,56 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
+// ===== Quotes Carousel =====
+(function () {
+    const slides = document.querySelectorAll('.quote-slide');
+    const dotsContainer = document.getElementById('quoteDots');
+    const prevBtn = document.getElementById('quotePrev');
+    const nextBtn = document.getElementById('quoteNext');
+
+    if (!slides.length || !dotsContainer) return;
+
+    let current = 0;
+    let autoTimer = null;
+
+    // Build dots
+    slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'quote-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', `Quote ${i + 1}`);
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+    });
+
+    function goTo(index) {
+        slides[current].classList.remove('active');
+        dotsContainer.children[current].classList.remove('active');
+        current = (index + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dotsContainer.children[current].classList.add('active');
+        resetAuto();
+    }
+
+    function resetAuto() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(() => goTo(current + 1), 5000);
+    }
+
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+
+    // Swipe support (touch)
+    let touchStartX = 0;
+    const track = document.getElementById('quotesTrack');
+    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+    });
+
+    resetAuto();
+})();
+
 // ===== Initial Check =====
 document.addEventListener('DOMContentLoaded', () => {
     checkTimelineVisibility();

@@ -269,7 +269,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const video       = document.getElementById('gesture-video');
     const toggleBtn   = document.getElementById('gesture-toggle');
     const statusEl    = document.getElementById('gesture-status');
-    const scrollZoneEl = document.getElementById('gesture-scroll-zone');
 
     if (!handCanvas || !video || !toggleBtn) return;
 
@@ -306,48 +305,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let prevPinchX     = 0;
     let prevPinchY     = 0;
     let processingFrame = false;
-    let pinchHoldFrames = 0;
-    let lastScrollAt = 0;
-    let zoneActive = false;
-
-
-    function updateScrollZoneUI(active) {
-        if (!scrollZoneEl) return;
-        zoneActive = active;
-        scrollZoneEl.classList.toggle('active', active);
-    }
-
-    function pointInScrollZone(x, y) {
-        if (!scrollZoneEl) return false;
-        const zoneRect = scrollZoneEl.getBoundingClientRect();
-        return x >= zoneRect.left && x <= zoneRect.right && y >= zoneRect.top && y <= zoneRect.bottom;
-    }
-
-    function handleGestureScroll(x, y, pinchNow, dist) {
-        if (!gestureActive || !pinchNow) {
-            pinchHoldFrames = 0;
-            updateScrollZoneUI(false);
-            return;
-        }
-
-        const inZone = pointInScrollZone(x, y);
-        updateScrollZoneUI(inZone);
-
-        if (!inZone) {
-            pinchHoldFrames = 0;
-            return;
-        }
-
-        pinchHoldFrames += 1;
-        const now = performance.now();
-        const isStrongPinch = dist < PINCH_THRESHOLD * 0.82;
-
-        if (pinchHoldFrames >= 3 && (isStrongPinch || now - lastScrollAt > 360)) {
-            window.scrollBy({ top: 130, behavior: 'smooth' });
-            lastScrollAt = now;
-            pinchHoldFrames = 1;
-        }
-    }
 
     // --- Physics loop (always running, acts only on flying words) ---
     function physicsLoop() {
@@ -508,8 +465,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!results.multiHandLandmarks || results.multiHandLandmarks.length === 0) {
             if (isPinching) { isPinching = false; releaseWord(); }
-            pinchHoldFrames = 0;
-            updateScrollZoneUI(false);
             return;
         }
 
@@ -531,7 +486,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const sy    = midNY       * window.innerHeight;
 
         drawPinchIndicator(sx, sy, pinchNow, dist);
-        handleGestureScroll(sx, sy, pinchNow, dist);
 
         if (pinchNow && !isPinching) {
             // Pinch start
@@ -639,7 +593,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try { await handsInstance.send({ image: video }); } catch (_) {}
 
         mediapipeReady = true;
-        setStatus('✋ 집기/던지기 + 우하단 SCROLL ZONE에서 스크롤');
+        setStatus('✋ 엄지+검지로 별명을 집어 던지세요!');
 
         // Frame processing loop
         async function processFrame() {
@@ -669,12 +623,11 @@ document.addEventListener('DOMContentLoaded', () => {
             handCanvas.style.display = 'block';
             video.style.display      = 'block';
             statusEl.style.display   = 'block';
-            if (scrollZoneEl) scrollZoneEl.style.display = 'flex';
 
             if (!mediapipeReady) {
                 await initHandTracking();
             } else {
-                setStatus('✋ 집기/던지기 + 우하단 SCROLL ZONE에서 스크롤');
+                setStatus('✋ 엄지+검지로 별명을 집어 던지세요!');
                 // Restart frame loop
                 async function processFrame() {
                     if (!gestureActive) return;
@@ -693,9 +646,6 @@ document.addEventListener('DOMContentLoaded', () => {
             handCanvas.style.display = 'none';
             video.style.display      = 'none';
             statusEl.style.display   = 'none';
-            if (scrollZoneEl) scrollZoneEl.style.display = 'none';
-            pinchHoldFrames = 0;
-            updateScrollZoneUI(false);
 
             hCtx.clearRect(0, 0, handCanvas.width, handCanvas.height);
             if (isPinching) { isPinching = false; releaseWord(); }

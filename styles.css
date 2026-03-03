@@ -957,6 +957,55 @@ ul {
     cursor: none !important;
 }
 
+
+/* ===== Merch Section ===== */
+.merch-section {
+    background: linear-gradient(160deg, rgba(12, 12, 28, 1) 0%, rgba(18, 8, 32, 1) 100%);
+}
+
+.merch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.2rem;
+}
+
+.merch-card {
+    display: block;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1rem;
+    min-height: 170px;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.merch-card h3 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin-bottom: 0.55rem;
+}
+
+.merch-card p {
+    color: rgba(255, 255, 255, 0.66);
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+
+.merch-card span {
+    display: inline-block;
+    margin-top: 0.9rem;
+    color: var(--rb-yellow);
+    font-weight: 700;
+    font-size: 0.82rem;
+}
+
+.merch-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--rb-red);
+    box-shadow: 0 10px 24px rgba(225, 6, 0, 0.25);
+}
+
 /* ===== Nicknames Word Cloud ===== */
 @keyframes wc-float {
     0%, 100% {
@@ -1132,6 +1181,7 @@ ul {
     0%, 100% { box-shadow: 0 4px 24px rgba(255, 215, 0, 0.4); }
     50%       { box-shadow: 0 4px 36px rgba(255, 215, 0, 0.75); }
 }
+
 
 /* Status hint shown under the toggle */
 #gesture-status {

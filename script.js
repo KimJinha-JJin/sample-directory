@@ -7,7 +7,7 @@ window.addEventListener('load', () => {
   const loadingScreen = document.getElementById('loading-screen');
   setTimeout(() => {
     loadingScreen.classList.add('hidden');
-  }, 1800);
+  }, 1200);
 });
 
 /* ---------- SCROLL ANIMATIONS (Intersection Observer) ---------- */
@@ -238,7 +238,15 @@ function showNext() {
   openLightbox(currentIndex);
 }
 
-galleryItems.forEach((item, i) => item.addEventListener('click', () => openLightbox(i)));
+galleryItems.forEach((item, i) => {
+  item.addEventListener('click', () => openLightbox(i));
+  item.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openLightbox(i);
+    }
+  });
+});
 lbClose.addEventListener('click', closeLightbox);
 lbBackdrop.addEventListener('click', closeLightbox);
 lbPrev.addEventListener('click', showPrev);

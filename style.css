@@ -588,11 +588,27 @@ section {
   text-transform: uppercase;
 }
 
+.results-scroll-wrap {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.results-scroll-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 1rem;
+  width: 4rem;
+  background: linear-gradient(to right, transparent, var(--bg));
+  pointer-events: none;
+  z-index: 1;
+}
+
 .results-scroll {
   display: flex;
   gap: 1rem;
-  max-width: 1000px;
-  margin: 0 auto;
   overflow-x: auto;
   padding-bottom: 1rem;
   scrollbar-width: thin;
@@ -1181,5 +1197,24 @@ section {
   .footer-links {
     flex-wrap: wrap;
     gap: 1rem;
+  }
+}
+
+/* ---------- PREFERS REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .fade-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

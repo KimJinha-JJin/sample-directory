@@ -73,6 +73,8 @@
     </a>
   </section>
 
+  <main>
+
   <!-- ========== ABOUT SECTION ========== -->
   <section id="about">
     <div class="section-header fade-in">
@@ -211,7 +213,8 @@
       <button class="filter-btn" data-filter="win">WIN</button>
       <button class="filter-btn" data-filter="podium">Podium</button>
     </div>
-    <div class="results-scroll fade-in">
+    <div class="results-scroll-wrap fade-in">
+    <div class="results-scroll">
       <div class="result-card p1" data-result="win">
         <div class="rc-pos">P1</div>
         <div class="rc-info">
@@ -269,6 +272,7 @@
         <div class="rc-badge podium">PODIUM</div>
       </div>
     </div>
+    </div>
   </section>
 
   <!-- ========== GALLERY SECTION ========== -->
@@ -278,26 +282,28 @@
       <h2>Moments</h2>
     </div>
     <div class="gallery-grid fade-in">
-      <div class="gallery-item" data-label="Race">
-        <img src="images/race.jpg" alt="George Russell Race Day">
+      <div class="gallery-item" data-label="Race" tabindex="0" role="button" aria-label="Race 사진 크게 보기">
+        <img src="images/race.jpg" alt="George Russell Race Day" loading="lazy">
       </div>
-      <div class="gallery-item tall" data-label="Victory">
-        <img src="images/victory.jpg" alt="Brazil GP 2022 Victory">
+      <div class="gallery-item tall" data-label="Victory" tabindex="0" role="button" aria-label="Victory 사진 크게 보기">
+        <img src="images/victory.jpg" alt="Brazil GP 2022 Victory" loading="lazy">
       </div>
-      <div class="gallery-item" data-label="Qualifying">
-        <img src="images/qualifying.jpg" alt="Mr. Saturday Qualifying">
+      <div class="gallery-item" data-label="Qualifying" tabindex="0" role="button" aria-label="Qualifying 사진 크게 보기">
+        <img src="images/qualifying.jpg" alt="Mr. Saturday Qualifying" loading="lazy">
       </div>
-      <div class="gallery-item wide" data-label="Team">
-        <img src="images/team.jpg" alt="Mercedes AMG Team">
+      <div class="gallery-item wide" data-label="Team" tabindex="0" role="button" aria-label="Team 사진 크게 보기">
+        <img src="images/team.jpg" alt="Mercedes AMG Team" loading="lazy">
       </div>
-      <div class="gallery-item" data-label="Podium">
-        <img src="images/podium.jpg" alt="Podium Finish">
+      <div class="gallery-item" data-label="Podium" tabindex="0" role="button" aria-label="Podium 사진 크게 보기">
+        <img src="images/podium.jpg" alt="Podium Finish" loading="lazy">
       </div>
-      <div class="gallery-item" data-label="Portrait">
-        <img src="images/portrait.png" alt="GR63 Portrait">
+      <div class="gallery-item" data-label="Portrait" tabindex="0" role="button" aria-label="Portrait 사진 크게 보기">
+        <img src="images/portrait.png" alt="GR63 Portrait" loading="lazy">
       </div>
     </div>
   </section>
+
+  </main>
 
   <!-- ========== FOOTER ========== -->
   <footer id="footer">

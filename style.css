@@ -221,32 +221,70 @@ section {
 .hero-content {
   position: relative;
   z-index: 1;
-  text-align: center;
-  max-width: 900px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.hero-text {
+  text-align: left;
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-portrait {
+  flex: 0 0 320px;
+  position: relative;
+}
+
+.hero-portrait img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  box-shadow: 0 0 40px var(--teal-glow), 0 0 80px rgba(0, 210, 190, 0.08);
+  animation: fadeInUp 1s 2s ease both;
+}
+
+.hero-portrait::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 1.1rem;
+  background: linear-gradient(135deg, var(--teal), transparent 60%);
+  z-index: -1;
+  opacity: 0.4;
 }
 
 .hero-number {
-  font-size: clamp(6rem, 20vw, 16rem);
+  font-size: clamp(6rem, 15vw, 14rem);
   font-weight: 900;
   letter-spacing: -0.05em;
   color: rgba(0, 210, 190, 0.06);
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  left: -2rem;
+  transform: translateY(-50%);
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
+  z-index: 0;
 }
 
 .hero-name {
-  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-size: clamp(2.5rem, 6vw, 6rem);
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--white);
   position: relative;
+  z-index: 1;
   animation: fadeInUp 1s 1.8s ease both;
 }
 
@@ -784,6 +822,67 @@ section {
   color: var(--text-sub);
 }
 
+/* ---------- QUOTES ---------- */
+#quotes {
+  background: linear-gradient(180deg, var(--bg) 0%, #0D1A19 100%);
+}
+
+.quotes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.quote-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-silver);
+  border-left: 3px solid var(--teal);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  margin: 0;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.quote-card:hover {
+  border-color: var(--teal);
+  transform: translateY(-4px);
+}
+
+.quote-card p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text);
+  font-style: italic;
+  margin-bottom: 1.2rem;
+}
+
+.quote-card p::before {
+  content: '"';
+  font-size: 3rem;
+  line-height: 0;
+  vertical-align: -0.6em;
+  color: var(--teal);
+  opacity: 0.4;
+  font-style: normal;
+  margin-right: 0.1em;
+}
+
+.quote-card cite {
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--teal);
+  font-style: normal;
+}
+
+@media (max-width: 768px) {
+  .quotes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------- FOOTER ---------- */
 #footer {
   background: #0A0A0A;
@@ -1139,6 +1238,30 @@ section {
   .nav-links.open a {
     display: block;
     padding: 0.9rem 0;
+  }
+
+  .hero-content {
+    flex-direction: column-reverse;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .hero-text {
+    text-align: center;
+  }
+
+  .hero-portrait {
+    flex: 0 0 auto;
+    width: 200px;
+  }
+
+  .hero-portrait img {
+    height: 260px;
+  }
+
+  .hero-number {
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   #about {

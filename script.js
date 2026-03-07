@@ -103,6 +103,68 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
+/* ---------- HERO TYPING EFFECT ---------- */
+const typingEl = document.getElementById('hero-typing');
+const typingPhrases = [
+  'Mr. Saturday',
+  '#63 · Mercedes-AMG Petronas',
+  '2022 Brazil GP Winner',
+  '차세대 F1 에이스',
+];
+let phraseIdx = 0, charIdx = 0, isDeleting = false;
+
+function typeWriter() {
+  const phrase = typingPhrases[phraseIdx];
+  typingEl.textContent = isDeleting
+    ? phrase.substring(0, charIdx - 1)
+    : phrase.substring(0, charIdx + 1);
+  charIdx += isDeleting ? -1 : 1;
+
+  let speed = isDeleting ? 55 : 95;
+  if (!isDeleting && charIdx === phrase.length) {
+    speed = 1800;
+    isDeleting = true;
+  } else if (isDeleting && charIdx === 0) {
+    isDeleting = false;
+    phraseIdx = (phraseIdx + 1) % typingPhrases.length;
+    speed = 400;
+  }
+  setTimeout(typeWriter, speed);
+}
+setTimeout(typeWriter, 2100);
+
+/* ---------- RACE RESULT FILTER ---------- */
+const filterBtns = document.querySelectorAll('.filter-btn');
+const resultCards = document.querySelectorAll('.result-card');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    resultCards.forEach(card => {
+      card.style.display = (filter === 'all' || card.dataset.result === filter) ? '' : 'none';
+    });
+  });
+});
+
+/* ---------- DARK / LIGHT THEME TOGGLE ---------- */
+const themeToggle = document.getElementById('theme-toggle');
+const root = document.documentElement;
+
+if (localStorage.getItem('theme') === 'light') root.setAttribute('data-theme', 'light');
+
+themeToggle.addEventListener('click', () => {
+  const isLight = root.getAttribute('data-theme') === 'light';
+  if (isLight) {
+    root.removeAttribute('data-theme');
+    localStorage.setItem('theme', 'dark');
+  } else {
+    root.setAttribute('data-theme', 'light');
+    localStorage.setItem('theme', 'light');
+  }
+});
+
 /* ---------- HAMBURGER MENU ---------- */
 const hamburger = document.getElementById('nav-hamburger');
 const navLinksList = document.querySelector('.nav-links');

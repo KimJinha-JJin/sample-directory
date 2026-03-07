@@ -108,7 +108,7 @@ const typingEl = document.getElementById('hero-typing');
 const typingPhrases = [
   'Mr. Saturday',
   '#63 · Mercedes-AMG Petronas',
-  '2022 Brazil GP Winner',
+  '5x F1 Race Winner',
   '차세대 F1 에이스',
 ];
 let phraseIdx = 0, charIdx = 0, isDeleting = false;

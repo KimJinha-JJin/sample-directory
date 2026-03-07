@@ -628,35 +628,15 @@ section {
   text-transform: uppercase;
 }
 
-.results-scroll-wrap {
-  position: relative;
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
   max-width: 1000px;
   margin: 0 auto;
 }
 
-.results-scroll-wrap::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 1rem;
-  width: 4rem;
-  background: linear-gradient(to right, transparent, var(--bg));
-  pointer-events: none;
-  z-index: 1;
-}
-
-.results-scroll {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  padding-bottom: 1rem;
-  scrollbar-width: thin;
-  scrollbar-color: var(--teal) var(--bg-card);
-}
-
 .result-card {
-  flex: 0 0 200px;
   background: var(--bg-card);
   border-radius: 0.75rem;
   padding: 1.25rem;
@@ -861,6 +841,59 @@ section {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--text-sub);
+}
+
+/* ---------- WITH TOTO ---------- */
+#with-toto {
+  background: linear-gradient(180deg, var(--bg) 0%, #0D1A19 100%);
+}
+
+.toto-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.toto-slot {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+
+.toto-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: var(--bg-card);
+  border: 1px dashed rgba(0, 210, 190, 0.35);
+  border-radius: 0.75rem;
+  transition: border-color var(--transition), background var(--transition);
+  cursor: default;
+}
+
+.toto-placeholder:hover {
+  border-color: var(--teal);
+  background: var(--bg-card2);
+}
+
+.toto-icon {
+  font-size: 2rem;
+  filter: grayscale(1);
+  opacity: 0.4;
+}
+
+.toto-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-sub);
+  opacity: 0.6;
 }
 
 /* ---------- QUOTES ---------- */
@@ -1348,7 +1381,12 @@ section {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .gallery-grid {
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery-grid,
+  .toto-grid {
     grid-template-columns: 1fr;
   }
 

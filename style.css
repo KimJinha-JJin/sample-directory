@@ -848,52 +848,81 @@ section {
   background: linear-gradient(180deg, var(--bg) 0%, #0D1A19 100%);
 }
 
-.toto-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+.toto-carousel {
   max-width: 1100px;
   margin: 0 auto;
 }
 
-.toto-slot {
-  border-radius: 0.75rem;
+.toto-track {
+  position: relative;
   overflow: hidden;
-  aspect-ratio: 4/3;
+  border-radius: 1rem;
+  aspect-ratio: 3/2;
+  background: var(--bg-card);
 }
 
-.toto-placeholder {
+.toto-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.toto-slide.active {
+  opacity: 1;
+  position: relative;
+}
+
+.toto-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.toto-slide-placeholder {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  background: var(--bg-card);
   border: 1px dashed rgba(0, 210, 190, 0.35);
-  border-radius: 0.75rem;
-  transition: border-color var(--transition), background var(--transition);
-  cursor: default;
+  border-radius: 1rem;
 }
 
-.toto-placeholder:hover {
-  border-color: var(--teal);
-  background: var(--bg-card2);
-}
-
-.toto-icon {
-  font-size: 2rem;
-  filter: grayscale(1);
-  opacity: 0.4;
-}
-
-.toto-label {
+.toto-slide-placeholder span {
   font-size: 0.7rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--text-sub);
-  opacity: 0.6;
+  opacity: 0.5;
+}
+
+.toto-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+.toto-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.25);
+  transition: background 0.3s, transform 0.3s;
+  padding: 0;
+}
+
+.toto-dot.active {
+  background: var(--teal);
+  transform: scale(1.35);
+}
+
+.toto-dot:hover {
+  background: rgba(0, 210, 190, 0.6);
 }
 
 /* ---------- QUOTES ---------- */

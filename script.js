@@ -258,3 +258,28 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft') showPrev();
   if (e.key === 'ArrowRight') showNext();
 });
+
+/* ---------- TOTO CAROUSEL ---------- */
+const totoSlides = document.querySelectorAll('.toto-slide');
+const totoDots   = document.querySelectorAll('.toto-dot');
+let totoIdx = 0, totoTimer;
+
+function showTotoSlide(n) {
+  totoSlides[totoIdx].classList.remove('active');
+  totoDots[totoIdx].classList.remove('active');
+  totoIdx = n;
+  totoSlides[totoIdx].classList.add('active');
+  totoDots[totoIdx].classList.add('active');
+}
+
+function startTotoTimer() {
+  totoTimer = setInterval(() => showTotoSlide((totoIdx + 1) % totoSlides.length), 4000);
+}
+
+function resetTotoTimer() {
+  clearInterval(totoTimer);
+  startTotoTimer();
+}
+
+totoDots.forEach((dot, i) => dot.addEventListener('click', () => { showTotoSlide(i); resetTotoTimer(); }));
+if (totoSlides.length) startTotoTimer();

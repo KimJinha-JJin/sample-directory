@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Max Verstappen Fan Zone</title>
+    <meta
+      name="description"
+      content="막스 베르스타펜 팬을 위한 비공식 랜딩 페이지. 시즌 하이라이트와 커리어 타임라인, 팬 뉴스룸을 만나보세요."
+    />
+    <meta property="og:title" content="Max Verstappen Fan Zone" />
+    <meta
+      property="og:description"
+      content="속도와 집념의 상징, 막스 베르스타펜의 팬 커뮤니티 랜딩 페이지."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;600;700&family=Orbitron:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#hero">본문 바로가기</a>
+    <header class="site-header">
+      <nav class="nav">
+        <div class="logo">MV33 FAN ZONE</div>
+        <div class="nav-links">
+          <a href="#hero">홈</a>
+          <a href="#highlights">하이라이트</a>
+          <a href="#timeline">커리어</a>
+          <a href="#gallery">갤러리</a>
+          <a href="#news">뉴스</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section id="hero" class="hero">
+        <div class="hero-content">
+          <p class="tag" data-hero-tag>World Champion • Oracle Red Bull Racing</p>
+          <h1 data-hero-headline>속도와 집념의 상징, 막스 베르스타펜</h1>
+          <p data-hero-description>
+            네덜란드를 대표하는 F1 챔피언. 2015년 최연소 데뷔부터 Red Bull Racing의
+            역사적인 타이틀까지, 막스 베르스타펜의 실제 커리어 데이터를 담았습니다.
+          </p>
+          <div class="hero-actions">
+            <a class="primary" href="#news">팬 카드 받기</a>
+            <a class="ghost" href="#highlights">2024 시즌 리뷰</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h3>커리어 핵심 기록</h3>
+          <div class="stats" data-stats></div>
+          <p class="note">* 공식 커리어 연혁 기반 요약입니다.</p>
+        </div>
+      </section>
+
+      <section id="highlights" class="highlights">
+        <div class="section-title">
+          <h2>시즌 하이라이트</h2>
+          <p>폭발적인 레이스 감각을 보여준 주요 순간들을 모았습니다.</p>
+        </div>
+        <div class="cards" data-highlights></div>
+      </section>
+
+      <section id="timeline" class="timeline">
+        <div class="section-title">
+          <h2>커리어 타임라인</h2>
+          <p>카트에서 시작해 F1의 정점까지, 성장의 순간을 한눈에.</p>
+        </div>
+        <div class="timeline-grid" data-timeline></div>
+      </section>
+
+      <section id="gallery" class="gallery">
+        <div class="section-title">
+          <h2>레이스 갤러리</h2>
+          <p>팬들이 사랑하는 순간을 상상 이미지로 채웠습니다.</p>
+        </div>
+        <div class="gallery-grid">
+          <figure>
+            <img src="assets/images/gallery-1.svg" alt="나이트 레이스 컨셉 아트" />
+          </figure>
+          <figure>
+            <img src="assets/images/gallery-2.svg" alt="피트 전략 컨셉 아트" />
+          </figure>
+          <figure>
+            <img src="assets/images/gallery-3.svg" alt="우승 세리머니 컨셉 아트" />
+          </figure>
+        </div>
+      </section>
+
+      <section id="news" class="news">
+        <div class="section-title">
+          <h2>팬 뉴스룸</h2>
+          <p>가장 빠르게 전해지는 MV33 소식들을 놓치지 마세요.</p>
+        </div>
+        <div class="news-grid">
+          <article class="news-card">
+            <span class="chip">피트 레포트</span>
+            <h3>새로운 셋업으로 연속 포디움 도전</h3>
+            <p>이번 주말은 다운포스와 타이어 관리가 핵심 포인트입니다.</p>
+          </article>
+          <article class="news-card">
+            <span class="chip">팬 스토리</span>
+            <h3>여섯 번째 응원 투어, 팬들의 열기</h3>
+            <p>팬들이 만든 웨이브와 깃발이 패독을 물들였습니다.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>MV33 Fan Zone © 2024. 팬 커뮤니티의 비공식 사이트입니다.</p>
+      <p class="note">커리어 데이터는 공개 기록 기반 요약입니다.</p>
+      <div class="footer-links">
+        <a href="#hero">상단으로</a>
+        <a href="#news">구독하기</a>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

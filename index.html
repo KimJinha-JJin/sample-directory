@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Verstappen Fan Site - #1</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-background">
+            <div class="loader-liquid-bg"></div>
+            <div class="loader-bubbles-bg">
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
+                <span class="bubble-bg"></span>
+            </div>
+            <div class="loader-stars">
+                <svg class="star" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="50,10 61,35 98,35 68,57 79,91 50,70 21,91 32,57 2,35 39,35" fill="#ffd700" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
+                </svg>
+                <svg class="star" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="50,10 61,35 98,35 68,57 79,91 50,70 21,91 32,57 2,35 39,35" fill="#ffd700" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
+                </svg>
+                <svg class="star" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="50,10 61,35 98,35 68,57 79,91 50,70 21,91 32,57 2,35 39,35" fill="#ffd700" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
+                </svg>
+                <svg class="star" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="50,10 61,35 98,35 68,57 79,91 50,70 21,91 32,57 2,35 39,35" fill="#ffd700" stroke="#ffffff" stroke-width="3" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+        <div class="loader-content">
+            <div class="loader-text">MAX VERSTAPPEN</div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <span class="nav-number">1</span>
+            <span class="nav-name">MAX VERSTAPPEN</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#stats">Stats</a></li>
+            <li><a href="#career">Career</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+        </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-subtitle">ORACLE RED BULL RACING</p>
+            <h1 class="hero-title">
+                <span class="hero-firstname">MAX</span>
+                <span class="hero-lastname">VERSTAPPEN</span>
+            </h1>
+            <div class="hero-number">1</div>
+            <div class="hero-info">
+                <div class="hero-info-item">
+                    <span class="label">World Championships</span>
+                    <span class="value">4</span>
+                </div>
+                <div class="hero-info-item">
+                    <span class="label">Race Wins</span>
+                    <span class="value">63+</span>
+                </div>
+                <div class="hero-info-item">
+                    <span class="label">Pole Positions</span>
+                    <span class="value">40+</span>
+                </div>
+            </div>
+            <a href="#about" class="hero-cta">Discover More</a>
+        </div>
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section" id="about">
+        <div class="container">
+            <h2 class="section-title">About Max</h2>
+            <div class="about-grid">
+                <div class="about-card profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar">MV</div>
+                        <div>
+                            <h3>Max Emilian Verstappen</h3>
+                            <p class="profile-tagline">Simply Simply Lovely</p>
+                        </div>
+                    </div>
+                    <div class="profile-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Date of Birth</span>
+                            <span class="detail-value">September 30, 1997</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Nationality</span>
+                            <span class="detail-value">Dutch / Belgian</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Birthplace</span>
+                            <span class="detail-value">Hasselt, Belgium</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Team</span>
+                            <span class="detail-value">Oracle Red Bull Racing</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Car Number</span>
+                            <span class="detail-value">#1</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">F1 Debut</span>
+                            <span class="detail-value">2015 Australian GP (Toro Rosso)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-card bio-card">
+                    <h3>The Phenomenon</h3>
+                    <p>
+                        막스 베르스타펜은 현대 F1에서 가장 뛰어난 드라이버 중 한 명입니다.
+                        아버지 요스 베르스타펜(전 F1 드라이버)의 영향으로 어린 시절부터 카트를 시작했으며,
+                        17세의 나이로 F1에 데뷔하여 역대 최연소 F1 드라이버가 되었습니다.
+                    </p>
+                    <p>
+                        2016년 스페인 GP에서 18세 228일의 나이로 역대 최연소 우승을 기록했으며,
+                        이후 Red Bull Racing에서 꾸준한 성장을 보여주었습니다.
+                        2021년 아부다비 GP에서 루이스 해밀턴과의 극적인 대결 끝에
+                        첫 월드 챔피언십을 차지했습니다.
+                    </p>
+                    <p>
+                        2022년과 2023년에는 압도적인 퍼포먼스로 연속 챔피언십을 달성했으며,
+                        특히 2023년에는 시즌 22승 중 19승을 거두며 역대 최다 시즌 우승 기록을 세웠습니다.
+                        2024년에도 4번째 월드 챔피언십을 획득하며 전설적인 커리어를 이어가고 있습니다.
+                    </p>
+                    <div class="quote-block">
+                        <p>"I'm not here to finish second. I'm here to win."</p>
+                        <cite>- Max Verstappen</cite>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section stats-section" id="stats">
+        <div class="container">
+            <h2 class="section-title">Career Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card" data-count="4">
+                    <div class="stat-icon">&#127942;</div>
+                    <div class="stat-number" data-target="4">0</div>
+                    <div class="stat-label">World Championships</div>
+                    <div class="stat-detail">2021, 2022, 2023, 2024</div>
+                </div>
+                <div class="stat-card" data-count="63">
+                    <div class="stat-icon">&#127937;</div>
+                    <div class="stat-number" data-target="63">0</div>
+                    <div class="stat-label">Race Wins</div>
+                    <div class="stat-detail">And counting...</div>
+                </div>
+                <div class="stat-card" data-count="40">
+                    <div class="stat-icon">&#9201;</div>
+                    <div class="stat-number" data-target="40">0</div>
+                    <div class="stat-label">Pole Positions</div>
+                    <div class="stat-detail">Qualifying Master</div>
+                </div>
+                <div class="stat-card" data-count="110">
+                    <div class="stat-icon">&#127941;</div>
+                    <div class="stat-number" data-target="110">0</div>
+                    <div class="stat-label">Podium Finishes</div>
+                    <div class="stat-detail">Consistency is key</div>
+                </div>
+                <div class="stat-card" data-count="33">
+                    <div class="stat-icon">&#9889;</div>
+                    <div class="stat-number" data-target="33">0</div>
+                    <div class="stat-label">Fastest Laps</div>
+                    <div class="stat-detail">Pure speed</div>
+                </div>
+                <div class="stat-card" data-count="200">
+                    <div class="stat-icon">&#127918;</div>
+                    <div class="stat-number" data-target="200">0</div>
+                    <div class="stat-label">Races Entered</div>
+                    <div class="stat-detail">Since 2015</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Career Timeline Section -->
+    <section class="section career-section" id="career">
+        <div class="container">
+            <h2 class="section-title">Career Highlights</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2015</div>
+                    <div class="timeline-content">
+                        <h3>F1 Debut</h3>
+                        <p>17세의 나이로 토로 로소에서 F1 데뷔. 역대 최연소 F1 드라이버 기록 수립.</p>
+                        <span class="timeline-tag">Toro Rosso</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2016</div>
+                    <div class="timeline-content">
+                        <h3>First Win - Spanish GP</h3>
+                        <p>Red Bull Racing 이적 첫 레이스에서 우승! 18세 228일로 역대 최연소 F1 우승 기록.</p>
+                        <span class="timeline-tag">Red Bull Racing</span>
+                        <span class="timeline-tag highlight">Record Breaker</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2021</div>
+                    <div class="timeline-content">
+                        <h3>First World Championship</h3>
+                        <p>루이스 해밀턴과의 역사적인 타이틀 경쟁. 아부다비 GP 마지막 랩에서의 극적인 역전으로 첫 월드 챔피언 등극.</p>
+                        <span class="timeline-tag highlight">World Champion</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-content">
+                        <h3>Second World Championship</h3>
+                        <p>새로운 그라운드 이펙트 규정 아래에서도 압도적인 퍼포먼스. 시즌 15승으로 2연패 달성.</p>
+                        <span class="timeline-tag highlight">World Champion x2</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h3>Record-Breaking Season</h3>
+                        <p>22전 19승! F1 역사상 가장 지배적인 시즌. 단일 시즌 최다승 기록 수립. 10연승 달성.</p>
+                        <span class="timeline-tag highlight">World Champion x3</span>
+                        <span class="timeline-tag">19 Wins</span>
+                        <span class="timeline-tag">10 Consecutive Wins</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">
+                        <h3>Fourth World Championship</h3>
+                        <p>치열한 경쟁 속에서도 뛰어난 실력으로 4번째 월드 챔피언십 획득. 레전드 반열에 오르다.</p>
+                        <span class="timeline-tag highlight">World Champion x4</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section gallery-section" id="gallery">
+        <div class="container">
+            <h2 class="section-title">Memorable Moments</h2>
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="victory">Victories</button>
+                <button class="filter-btn" data-filter="championship">Championships</button>
+                <button class="filter-btn" data-filter="record">Records</button>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item" data-category="championship">
+                    <img src="images/Abu Dhabi 2021.jpg" alt="Abu Dhabi 2021 - First World Championship">
+                    <div class="gallery-overlay">
+                        <h4>Abu Dhabi 2021</h4>
+                        <p>첫 월드 챔피언십 - 마지막 랩 역전 드라마</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="victory">
+                    <img src="images/Spain 2016.jpg" alt="Spain 2016 - Youngest Ever Winner">
+                    <div class="gallery-overlay">
+                        <h4>Spain 2016</h4>
+                        <p>역대 최연소 F1 우승 - 18세 228일</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="record">
+                    <img src="images/2023 Season.jpg" alt="2023 Season - 19 Wins">
+                    <div class="gallery-overlay">
+                        <h4>2023 Season</h4>
+                        <p>22전 19승 - F1 역사상 가장 지배적인 시즌</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="victory">
+                    <img src="images/Dutch GP.jpg" alt="Dutch GP - Home Victory">
+                    <div class="gallery-overlay">
+                        <h4>Dutch GP</h4>
+                        <p>홈 그랑프리에서의 감동적인 우승</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="record">
+                    <img src="images/10 Consecutive Wins.jpg" alt="10 Consecutive Wins">
+                    <div class="gallery-overlay">
+                        <h4>10 Consecutive Wins</h4>
+                        <p>2023 시즌 10연승 - 전무후무한 기록</p>
+                    </div>
+                </div>
+                <div class="gallery-item" data-category="championship">
+                    <img src="images/4x World Champion.jpg" alt="4x World Champion">
+                    <div class="gallery-overlay">
+                        <h4>4x World Champion</h4>
+                        <p>2024년 4번째 월드 챔피언십 달성</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Famous Quotes Section -->
+    <section class="section quotes-section">
+        <div class="container">
+            <h2 class="section-title">Max's Words</h2>
+            <div class="quotes-slider" id="quotesSlider">
+                <div class="quote-slide active">
+                    <blockquote>
+                        "Simply simply lovely!"
+                    </blockquote>
+                    <p class="quote-context">- Every time after a dominant victory</p>
+                </div>
+                <div class="quote-slide">
+                    <blockquote>
+                        "I don't care what people think. I know what I can do."
+                    </blockquote>
+                    <p class="quote-context">- On dealing with criticism</p>
+                </div>
+                <div class="quote-slide">
+                    <blockquote>
+                        "I just want to race. That's all I've ever wanted to do."
+                    </blockquote>
+                    <p class="quote-context">- On his passion for motorsport</p>
+                </div>
+            </div>
+            <div class="quote-dots" id="quoteDots"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><span class="footer-number">1</span> MAX VERSTAPPEN</h4>
+                    <p>4x Formula 1 World Champion. The Flying Dutchman.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#stats">Stats</a></li>
+                        <li><a href="#career">Career</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Follow Max</h4>
+                    <div class="sns-links">
+                        <a href="https://www.instagram.com/maxverstappen1/" target="_blank" rel="noopener noreferrer" class="sns-btn" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            Instagram
+                        </a>
+                        <a href="https://x.com/Max33Verstappen" target="_blank" rel="noopener noreferrer" class="sns-btn" aria-label="X (Twitter)">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            X
+                        </a>
+                        <a href="https://www.youtube.com/redbullracing" target="_blank" rel="noopener noreferrer" class="sns-btn" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                            YouTube
+                        </a>
+                        <a href="https://www.redbullracing.com/int-en" target="_blank" rel="noopener noreferrer" class="sns-btn" aria-label="Red Bull Racing">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                            Red Bull Racing
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Max Verstappen Fan Site. Made with passion for F1.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

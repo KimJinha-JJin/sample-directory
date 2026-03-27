@@ -1,0 +1,115 @@
+.loader-can {
+    position: relative;
+    width: 120px;
+    height: 200px;
+    background: linear-gradient(to right, rgba(30, 58, 95, 0.8), rgba(10, 22, 40, 0.8));
+    border-radius: 15px;
+    border: 3px solid var(--rb-dark-blue);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(225, 6, 0, 0.3);
+}
+
+.loader-can-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.loader-liquid-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(to top, rgba(225, 6, 0, 0.9), rgba(255, 215, 0, 0.7));
+    animation: fillLiquid 2s ease-in-out forwards;
+    box-shadow: inset 0 -2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.loader-bubbles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.bubble {
+    position: absolute;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 215, 0, 0.4));
+    border-radius: 50%;
+    opacity: 0;
+    animation: bubbleRise 2s ease-in infinite;
+}
+
+.bubble:nth-child(1) {
+    width: 8px;
+    height: 8px;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.bubble:nth-child(2) {
+    width: 6px;
+    height: 6px;
+    left: 40%;
+    animation-delay: 0.3s;
+}
+
+.bubble:nth-child(3) {
+    width: 7px;
+    height: 7px;
+    left: 60%;
+    animation-delay: 0.6s;
+}
+
+.bubble:nth-child(4) {
+    width: 5px;
+    height: 5px;
+    left: 30%;
+    animation-delay: 0.9s;
+}
+
+.bubble:nth-child(5) {
+    width: 6px;
+    height: 6px;
+    left: 70%;
+    animation-delay: 1.2s;
+}
+
+.loader-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    margin: 1rem 0 2rem;
+    color: var(--text-primary);
+}
+
+@keyframes fillLiquid {
+    0% {
+        height: 0;
+    }
+    100% {
+        height: 85%;
+    }
+}
+
+@keyframes bubbleRise {
+    0% {
+        bottom: -10px;
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        bottom: 100%;
+        opacity: 0;
+    }
+}
